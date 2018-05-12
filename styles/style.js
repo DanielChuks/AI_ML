@@ -158,6 +158,9 @@ export default StyleSheet.create({
     button__Widee:{
         width:82
     },
+    button__Wide__Medium:{
+        width:120
+    },
     input:{
         
         height:50,
