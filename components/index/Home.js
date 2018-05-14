@@ -37,11 +37,16 @@ class Home extends Component {
       page: false,
       index: 0
     };
-    this.dothis = this.dothis.bind(this);
+    this.singin = this.singin.bind(this);
+    this.register = this.register.bind(this);
   }
 
-  dothis() {
-    console.log("Herer")
+  singin() {
+    this.props.navigation.navigate('signin');
+  }
+
+  register() {
+    this.props.navigation.navigate('register1');
   }
 
 
@@ -68,7 +73,7 @@ class Home extends Component {
             <Button
               text={"Sign In"}
               textColor={[{ color: colors.b }]}
-              event={this.dothis}
+              event={this.singin}
               button={[
                 {
                   backgroundColor: "orange",
@@ -93,7 +98,7 @@ class Home extends Component {
             <Button
               text={"Register"}
               textColor={[{ color: "orange" }]}
-              event={this.dothis}
+              event={this.register}
               button={[
                 {
                   backgroundColor: "#fff",
