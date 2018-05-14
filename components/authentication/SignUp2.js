@@ -172,7 +172,7 @@ class SignUp extends Component {
             Already have an Account?
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("signin")}
-              style={{ width: 50, height: 13 }}
+              style={{ width: 50, height: 15 }}
             >
               <Text style={{ paddingLeft: 5, color: "rgba(255, 255, 255,1)", marginBottom: -5 }}>
                 Sign In

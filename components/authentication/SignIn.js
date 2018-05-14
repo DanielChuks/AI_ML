@@ -65,8 +65,7 @@ export default class SignIn extends Component {
           }
         ]}
       >
-        <Background bugg={bugg} />
-        <View style={{ flex: 1 }} />
+        <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{
             flex: 4,
@@ -77,26 +76,26 @@ export default class SignIn extends Component {
           }}
         >
           <View>
-            <Img
-              source={{ uri: rsc.logo }}
-              style={[{ width: 200, height: 75, marginBottom: 10 }]}
-              onLoadStart={e => this.setState({ loading: true })}
-              onLoad={e => this.setState({ loading: false })}
-            />
-            <View style={{ alignItems: "center" }}>
-              <Text
-                style={{
-                  color: "white",
-                  fontFamily: "Comfortaa-Bold",
-                  fontSize: 18
-                }}
-              >
-                DRIVER
-              </Text>
+            <View style={{ marginTop: 70}}>
+              <Img
+                source={{ uri: rsc.logo }}
+                style={[{ width: 160, height: 60}]}
+              />
+              <View style={{ alignItems: "center" }}>
+                <Text
+                  style={{
+                    color: "white",
+                    fontFamily: "Comfortaa-Bold",
+                    fontSize: 18
+                  }}
+                >
+                  DRIVER
+                </Text>
+              </View>
             </View>
           </View>
 
-          <ScrollView style={{ width: "100%" }}>
+          <ScrollView style={{ width: "100%", marginTop: 150 }}>
             {this.state.switchScreen ? (
               <View>
                 <Inputs
@@ -205,39 +204,21 @@ export default class SignIn extends Component {
             />
           )}
         </View>
-        <View style={{ flex: 1 }}>
           <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{ flex: 1, height: 789, alignItems: "center"}}
           >
-            <Text
-              style={{
-                color: "rgba(255, 255, 255,.6)",
-                fontFamily: "Comfortaa-Regular"
-              }}
-            >
-              Don't have an Account?
+            <Text style={{color: "rgba(255, 255, 255,.6)", marginTop: 20 }}>
+            Don't have an Account?
               <TouchableOpacity
-                style={{ width: 75, height: 13 }}
-                onPress={() => this.props.navigation.navigate("signup")}
+              onPress={() => this.props.navigation.navigate("register1")}
+                style={{ width: "auto", height: 15 }}
               >
-                <Text
-                  style={{
-                    paddingLeft: 5,
-                    color: colors.a,
-                    fontFamily: "Comfortaa-Regular",
-                    fontWeight: "bold",
-                    fontSize: 30
-                  }}
-                >
-                  Register
+                <Text style={{ paddingLeft: 5, color: "rgba(255, 255, 255,1)", marginBottom: -9 }}>
+                Register
                 </Text>
               </TouchableOpacity>
             </Text>
           </View>
-        </View>
-        {
-          //(!this.props.screenProps.user.error)? alert(this.props.screenProps.user.error):null
-        }
       </View>
     );
   }
