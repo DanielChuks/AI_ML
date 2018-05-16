@@ -53,6 +53,7 @@ class Home extends Component {
   render() {
     return (
       <View style={[styles.container]}>
+        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
         <Background bugg={bugg} />
         <View style={{ flex: 1 }} />
         <View
@@ -64,7 +65,7 @@ class Home extends Component {
         >
           <Img
             source={{ uri: rsc.logo }}
-            style={[{ width: 200, height: 75, marginTop: 400 }]}
+            style={[{ width: 200, height: 75, marginTop: 250 }]}
             onLoadStart={e => this.setState({ loading: true })}
             onLoad={e => this.setState({ loading: false })}
           />

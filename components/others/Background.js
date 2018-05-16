@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import Img from "../others/Images";
 import Dimensions from "Dimensions";
 
-const Background = ({ bugg }) => (
+const Background = ({ bugg, opacity }) => (
   <View
     style={{
       position: "absolute",
@@ -32,7 +32,7 @@ const Background = ({ bugg }) => (
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: "rgba(0,0,0,.5)"
+        backgroundColor: `rgba(0,0,0,${opacity || 0.5})`
       }}
     />
   </View>

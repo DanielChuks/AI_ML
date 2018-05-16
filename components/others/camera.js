@@ -13,7 +13,7 @@ import styles, { colors } from "../../styles/style";
 import Button from "../others/Button";
 import rsc from "../../lib/resources";
 import Img from "../others/Images";
-import Expo from "expo";
+import { ImagePicker } from "expo";
 
 export default class Camera extends Component {
   constructor(props) {
@@ -25,8 +25,15 @@ export default class Camera extends Component {
     this._runCamera = this._runCamera.bind(this);
   }
 
+
+  async componentDidMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    const { status_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    this.setState({ hasCameraPermission: status === "granted", hasCameraRollPermission: status_roll === "granted"});
+  }
+
   _pickImage = async () => {
-    let result = await Expo.ImagePicker.launchImageLibraryAsync({
+    let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [4, 3]
     });
@@ -37,13 +44,14 @@ export default class Camera extends Component {
       this.setState({ image: result.uri });
     }
   };
+
   _runCamera = async () => {
-    let result = Expo.ImagePicker.launchCameraAsync({
+    let result = ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4, 3],
-      quality
+      aspect: [4, 3]
     });
   };
+
   async componentDidMount() {
     this._runCamera();
   }

@@ -65,6 +65,7 @@ export default class SignIn extends Component {
           }
         ]}
       >
+        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
         <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{
@@ -76,7 +77,7 @@ export default class SignIn extends Component {
           }}
         >
           <View>
-            <View style={{ marginTop: 70}}>
+            <View style={{ marginTop: 20}}>
               <Img
                 source={{ uri: rsc.logo }}
                 style={[{ width: 160, height: 60}]}

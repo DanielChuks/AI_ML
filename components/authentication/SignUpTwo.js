@@ -24,7 +24,7 @@ export default class SignUpOne extends React.Component {
   
   render() {
     return (
-      <ScrollView style={{ paddingLeft: 10, paddingRight: 10, marginTop: 100 }}>
+      <ScrollView style={{ paddingLeft: 10, paddingRight: 10, marginTop: 50 }}>
         <Inputs
           text="Email address"
           isPassword={false}
