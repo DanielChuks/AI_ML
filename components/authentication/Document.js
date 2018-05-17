@@ -7,8 +7,11 @@ import {
   Image,
   Easing,
   ScrollView,
-  TextInput
+  TextInput,
+  Alert
 } from "react-native";
+import { Permissions } from "expo";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import styles, { colors } from "../../styles/style";
 import Button from "../others/Button";
 import rsc from "../../lib/resources";
@@ -16,138 +19,125 @@ import Img from "../others/Images";
 import Imagepicker from "../others/Imageandvideopicker";
 import Camera from "../others/camera";
 
+
 export default class Document extends Component {
   constructor(props) {
     super(props);
     this.state = {
       image: null
     };
-    this._pickImage = this._pickImage.bind(this);
+
+    this.uploadLicense = this.uploadLicense.bind(this);
+    this.uploadVehicleReg = this.uploadVehicleReg.bind(this);
   }
 
-  _pickImage = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      allowsEditing: true,
-      aspect: [4, 3]
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
-    }
-  };
-  async componentDidMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    this.setState({ hasCameraPermission: status === "granted" });
+  uploadLicense() {
+    this.props.navigation.navigate('imageandvideo', {documentType: 'DRIVERS LICENSE'})
   }
 
-  // render() {
-  //   let { image } = this.state;
-  //   return (
-  //     //<ScrollView>
-  //     <View
-  //       style={[
-  //         {
-  //           backgroundColor: colors.aa,
-  //           flex: 1,
-  //           alignItems: "center",
-  //           justifyContent: "center"
-  //         }
-  //       ]}
-  //     >
-  //       <View style={{ marginBottom: 100 }}>
-  //         <Img
-  //           source={{ uri: rsc.logo }}
-  //           style={[{ width: 200, height: 75, marginBottom: 10 }]}
-  //         />
-  //         <View style={{ alignItems: "center" }}>
-  //           <Text
-  //             style={{
-  //               color: "white",
-  //               fontFamily: "Comfortaa-Bold",
-  //               fontSize: 18
-  //             }}
-  //           >
-  //             DRIVER
-  //           </Text>
-  //         </View>
-  //       </View>
-  //       <Button
-  //         text={"Vehicles registration papers"}
-  //         textColor={[{ color: colors.a, fontFamily: "Comfortaa-Bold" }]}
-  //         event={this._pickImage}
-  //         button={[
-  //           {
-  //             backgroundColor: "#fff",
-  //             borderRadius: 5,
-  //             display: "flex",
-  //             justifyContent: "center",
-  //             alignItems: "center",
-  //             padding: 0,
-  //             margin: 0,
-  //             shadowColor: "#000000",
-  //             shadowRadius: 5,
-  //             shadowOpacity: 0.5,
-  //             shadowOffset: {
-  //               width: 0,
-  //               height: 1
-  //             },
-  //             margin: 10,
-  //             width: 230
-  //           },
-  //           styles.button__Long
-  //         ]}
-  //       />
-  //       <Button
-  //         text={"Drivers Licensce"}
-  //         textColor={[{ color: colors.a, fontFamily: "Comfortaa-Bold" }]}
-  //         event={this._pickImage}
-  //         button={[
-  //           {
-  //             backgroundColor: "#fff",
-  //             borderRadius: 5,
-  //             display: "flex",
-  //             justifyContent: "center",
-  //             alignItems: "center",
-  //             padding: 0,
-  //             margin: 0,
-  //             shadowColor: "#000000",
-  //             shadowRadius: 5,
-  //             shadowOpacity: 0.5,
-  //             shadowOffset: {
-  //               width: 0,
-  //               height: 1
-  //             },
-  //             margin: 10,
-  //             width: 230
-  //           },
-  //           styles.button__Long
-  //         ]}
-  //       />
-
-  //       <View
-  //         style={{
-  //           height: 150,
-  //           width: "100%",
-  //           marginTop: 20,
-  //           justifyContent: "center",
-  //           alignItems: "center"
-  //         }}
-  //       >
-  //         {image && (
-  //           <Image
-  //             source={{ uri: image }}
-  //             style={{ width: 100, height: 100 }}
-  //           />
-  //         )}
-  //       </View>
-  //     </View>
-  //     //</ScrollView>
-  //   );
-  // }
+  uploadVehicleReg() {
+    this.props.navigation.navigate('imageandvideo', {documentType: 'VEHICLE REGISTRATION'})
+  }
 
   render() {
-    return <Camera />;
+    console.log(this.props.navigation.state.params)
+    let { image } = this.state;
+    return (
+      <View
+        style={[
+          {
+            backgroundColor: colors.aa,
+            flex: 1,
+            alignItems: "center",
+            justifyContent: 'flex-start'
+          }
+        ]}
+      >
+        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
+        <View style={{ marginTop: 20}}>
+          <Img
+            source={{ uri: rsc.logo }}
+            style={[{ width: 160, height: 60}]}
+          />
+          <View style={{ alignItems: "center" }}>
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Comfortaa-Bold",
+                fontSize: 18
+              }}
+            >
+              DRIVER
+            </Text>
+          </View>
+        </View>
+        <View style={{ alignItems: "center", marginTop: 150 }}>
+          <Text
+            style={{
+              color: "white",
+              fontFamily: "Comfortaa-Bold",
+              fontSize: 18,
+              textDecorationLine: 'underline',
+              textDecorationStyle: 'double'
+            }}
+          >
+            DOCUMENTS
+          </Text>
+          <TouchableOpacity
+            style = {[
+              styles.width80,
+              {
+                backgroundColor: '#DDDDDD',
+                padding: 10,
+                borderRadius: 15,
+                marginTop: 40,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }]
+            }
+            onPress={this.uploadLicense}
+          >
+            <Text style={[{fontSize: 18}]}> Drivers license </Text>
+            <Icon
+              name="chevron-right"
+              size={28}
+              color={colors.aa}
+              onPress={this.uploadLicense}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style = {[
+              styles.width80,
+              {
+                backgroundColor: '#DDDDDD',
+                padding: 10,
+                borderRadius: 15,
+                marginTop: 40,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }]
+            }
+            onPress={this.uploadVehicleReg}
+          >
+            <Text style={[{fontSize: 18}]}> Vehicle registration </Text>
+            <Icon
+              name="chevron-right"
+              size={28}
+              color={colors.aa}
+              onPress={this.uploadVehicleReg}
+            />
+          </TouchableOpacity>
+
+          <Text
+            style={{alignSelf: "flex-end", marginTop: 20, marginRight: 7, color: "white", fontSize: 20, fontFamily: "Palatino"}}
+            onPress={() => console.log("skip")}
+          > 
+            skip >
+          </Text>
+        </View>
+      </View>
+    );
   }
 }

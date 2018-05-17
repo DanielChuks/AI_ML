@@ -13,7 +13,7 @@ import styles, { colors } from "../../styles/style";
 import Button from "../others/Button";
 import rsc from "../../lib/resources";
 import Img from "../others/Images";
-import Expo from "expo";
+import { ImagePicker, Permissions } from "expo";
 
 export default class Camera extends Component {
   constructor(props) {
@@ -25,10 +25,22 @@ export default class Camera extends Component {
     this._runCamera = this._runCamera.bind(this);
   }
 
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    const { status_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    this.setState({ hasCameraPermission: status === "granted", hasCameraRollPermission: status_roll === "granted"});
+  }
+
+  // async componentDidMount() {
+  //   const { status } = await Permissions.askAsync(Permissions.CAMERA);
+  //   const { status_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  //   this.setState({ hasCameraPermission: status === "granted", hasCameraRollPermission: status_roll === "granted"});
+  // }
+
   _pickImage = async () => {
-    let result = await Expo.ImagePicker.launchImageLibraryAsync({
+    let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [9, 16]
     });
 
     console.log(result);
@@ -37,16 +49,17 @@ export default class Camera extends Component {
       this.setState({ image: result.uri });
     }
   };
+
   _runCamera = async () => {
-    let result = Expo.ImagePicker.launchCameraAsync({
+    let result = ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4, 3],
-      quality
+      aspect: [4, 3]
     });
   };
-  async componentDidMount() {
-    this._runCamera();
-  }
+
+  // async componentDidMount() {
+  //   this._runCamera();
+  // }
 
   render() {
     let { image } = this.state;
@@ -62,10 +75,11 @@ export default class Camera extends Component {
           }
         ]}
       >
+        <View style={{width: "100%", height: 50}}/>
         <View style={{ marginBottom: 100 }}>
           <Img
             source={{ uri: rsc.logo }}
-            style={[{ width: 200, height: 75, marginBottom: 10 }]}
+            style={[{ width: 200, height: 75, marginTop: 10 }]}
           />
           <View style={{ alignItems: "center" }}>
             <Text
@@ -80,7 +94,7 @@ export default class Camera extends Component {
           </View>
         </View>
         <Button
-          text={"Vehicles registration papers"}
+          text={"Vehicle registration"}
           textColor={[{ color: colors.a, fontFamily: "Comfortaa-Bold" }]}
           event={this._pickImage}
           button={[
@@ -108,7 +122,7 @@ export default class Camera extends Component {
         <Button
           text={"Drivers Licensce"}
           textColor={[{ color: colors.a, fontFamily: "Comfortaa-Bold" }]}
-          event={this._pickImage}
+          event={this._runCamera}
           button={[
             {
               backgroundColor: "#fff",

@@ -9,70 +9,39 @@ import {
   ScrollView,
   TextInput
 } from "react-native";
-import propTypes from "prop-types";
 import styles, { colors } from "../../styles/style";
 import Inputs from "../others/Inputs";
+import propTypes from "prop-types";
 import Button from "../others/Button";
 import Img from "../others/Images";
 import lib from "../../lib/lib";
 import rsc from "../../lib/resources";
 
-//console.log(storage.getState())
-
 export default class SignUpOne extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      displayInputLabel: false,
-      email: "",
-      password: "",
-      repeatPassword: "",
-      firstName: "",
-      lastName: "",
-      mobile: "",
-      page: false
-    };
-    this.NavigatePage = this.NavigatePage.bind(this);
-    this.onSignUp = this.onSignUp.bind(this);
   }
-  NavigatePage() {
-    this.setState(prevState => ({ page: !prevState.page }));
-  }
-  onSignUp() {
-    let signUpDetails = {
-      email: this.state.email,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      password: this.state.password,
-      mobile: this.state.mobile,
-      isCustomer: true,
-      isChef: false
-    };
-    console.log(signUpDetails);
-    lib.signup(signUpDetails);
-  }
-
+  
   render() {
     return (
-      <ScrollView style={{ paddingLeft: 10, paddingRight: 10 }}>
+      <ScrollView style={{ paddingLeft: 10, paddingRight: 10, marginTop: 50 }}>
         <Inputs
-          text="First name"
+          text="Email address"
           isPassword={false}
-          onChangeText={this.props.firstName}
-          value={this.props.value.firstName}
+          onChangeText={this.props.email}
+          value={this.props.value.email}
         />
         <Inputs
-          text="Last name"
-          isPassword={false}
-          onChangeText={this.props.lastName}
-          value={this.props.value.firstName}
+          text="Password"
+          isPassword={true}
+          onChangeText={this.props.password}
+          value={this.props.value.password}
         />
         <Inputs
-          text="080x xxx xxxx "
-          disc="Mobile"
-          isPassword={false}
-          onChangeText={this.props.mobile}
-          value={this.props.value.mobile}
+          text="Repeat Password"
+          isPassword={true}
+          onChangeText={this.props.repeatPassword}
+          value={this.props.value.repeatPassword}
         />
       </ScrollView>
     );

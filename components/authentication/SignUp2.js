@@ -13,7 +13,6 @@ import styles, { colors } from "../../styles/style";
 import Inputs from "../others/Inputs";
 import propTypes from "prop-types";
 import SignUpB from "./SignUpTwo";
-import SignUpA from "./SignUpOne";
 import Swiper from "react-native-swiper";
 import Button from "../others/Button";
 import Img from "../others/Images";
@@ -41,12 +40,10 @@ class SignUp extends Component {
   }
 
   onSignUp() {
+    const { firstName, lastName, phoneNumber } = this.props.navigation.state.params;
     let email = this.state.email.toLowerCase(),
       password = this.state.password,
-      repeatPassword = this.state.repeatPassword,
-      firstName = this.state.firstName,
-      lastName = this.state.lastName,
-      phoneNumber = this.state.mobile;
+      repeatPassword = this.state.repeatPassword;
 
     if (email === "") {
       alert("Please enter a valid email address");
@@ -54,22 +51,17 @@ class SignUp extends Component {
       alert("please enter a password");
     } else if (repeatPassword !== password) {
       alert("Password mismatch");
-    } else if (firstName === "") {
-      alert("Please enter a first name");
-    } else if (lastName === "") {
-      alert("Please enter a last name");
-    } else if (phoneNumber === "") {
-      alert("Please enter a valid phone number");
     } else {
       let newUser = {
         firstName,
         lastName,
-        email,
         phoneNumber,
+        email,
         password,
         userType: "driver"
       };
-      lib.signup(newUser);
+      this.props.navigation.navigate('uploaddocument')
+      // lib.signup(newUser);
     }
   }
 
@@ -86,8 +78,8 @@ class SignUp extends Component {
   render() {
     return (
       <View style={[styles.container]}>
-        <Background bugg={bugg} />
-        <View style={{ flex: 1 }} />
+        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
+        <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{
             flex: 5,
@@ -95,34 +87,31 @@ class SignUp extends Component {
             alignItems: "center"
           }}
         >
-          <Img
-            source={{ uri: rsc.logo }}
-            style={[{ width: 200, height: 75 }]}
-            onLoadStart={e => this.setState({ loading: true })}
-            onLoad={e => this.setState({ loading: false })}
+          <View style={{ marginTop: 20}}>
+            <Img
+              source={{ uri: rsc.logo }}
+              style={[{ width: 160, height: 60}]}
+            />
+            <View style={{ alignItems: "center" }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontFamily: "Comfortaa-Bold",
+                  fontSize: 18
+                }}
+              >
+                DRIVER
+              </Text>
+            </View>
+          </View>
+          <SignUpB
+            email={email => this.setState(() => ({ email }))}
+            password={password => this.setState(() => ({ password }))}
+            repeatPassword={repeatPassword =>
+              this.setState(() => ({ repeatPassword }))
+            }
+            value={this.state}
           />
-          <Swiper
-            activeDotColor="white"
-            index={1}
-            bounces={true}
-            loop={false}
-            onIndexChanged={index => console.log(index)}
-          >
-            <SignUpA
-              email={email => this.setState(() => ({ email }))}
-              password={password => this.setState(() => ({ password }))}
-              repeatPassword={repeatPassword =>
-                this.setState(() => ({ repeatPassword }))
-              }
-              value={this.state}
-            />
-            <SignUpB
-              firstName={firstName => this.setState(() => ({ firstName }))}
-              lastName={lastName => this.setState(() => ({ lastName }))}
-              mobile={mobile => this.setState(() => ({ mobile }))}
-              value={this.state}
-            />
-          </Swiper>
           {this.props.screenProps.user.fetching ? (
             <Button
               text="Creating Account..."
@@ -151,7 +140,7 @@ class SignUp extends Component {
             />
           ) : (
             <Button
-              text={"Sign Up"}
+              text={"Register"}
               textColor={[{ color: colors.a }]}
               event={this.onSignUp}
               button={[
@@ -178,15 +167,15 @@ class SignUp extends Component {
           )}
         </View>
         <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          style={{ flex: 1, height: 789, alignItems: "center" }}
         >
-          <Text style={{ color: "rgba(255, 255, 255,.6)" }}>
+          <Text style={{ color: "rgba(255, 255, 255,.6)", marginTop: 20 }}>
             Already have an Account?
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("signin")}
-              style={{ width: 50, height: 13 }}
+              style={{ width: 50, height: 15 }}
             >
-              <Text style={{ paddingLeft: 5, color: "rgba(255, 255, 255,1)" }}>
+              <Text style={{ paddingLeft: 5, color: "rgba(255, 255, 255,1)", marginBottom: -5 }}>
                 Sign In
               </Text>
             </TouchableOpacity>

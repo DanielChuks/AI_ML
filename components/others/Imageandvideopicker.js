@@ -17,16 +17,18 @@ export default class Imageandvideopicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalVisible: true
+      modalVisible: true,
+      documentType: this.props.navigation.state.params.documentType
     };
   }
   render() {
     return (
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={false}
         visible={this.state.modalVisible}
       >
+        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
         <View
           style={{
             flex: 1,
@@ -61,7 +63,7 @@ export default class Imageandvideopicker extends Component {
                 color: colors.b
               }}
             >
-              DRIVERS LICENSE
+              {this.state.documentType}
             </Text>
             <Icon
               name="keyboard-backspace"
@@ -70,60 +72,58 @@ export default class Imageandvideopicker extends Component {
               onPress={() => console.log("yh")}
             />
           </View>
-          <View style={{ flex: 2, backgroundColor: colors.b }} />
-          <View style={{ flex: 3, padding: 15 }}>
-            <Text
-              style={{
-                fontSize: 17,
-                fontFamily: "Comfortaa-Bold",
-                color: "rgba(255,255,255,.8)",
-                marginBottom: 10
-              }}
-            >
-              TAKE A PHOTO OF YOUR DOCUMENT
-            </Text>
+          <Image
+            source={require('../../assets/images/dl.png')}
+            style={[{marginLeft: -10}]}
+          />
+          <View style={{ flex: 3, padding: 20 }}>
             <View
               style={{
                 justifyContent: "space-between",
                 flex: 1,
-                marginBottom: -20
               }}
             >
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 15,
                   fontFamily: "Comfortaa-Regular",
-                  color: "rgba(255,255,255,.8)"
+                  color: "rgba(255,255,255,.8)",
+                  marginTop: 20
                 }}
               >
                 To reduce the chances of your document being rejected: please
                 ensure that allinformation is legible and all corners of the
-                document are visible.Please verify the validity of your driving
-                license against the national database.Your document may not be
-                accepted if it has expired or is invalid.Please check that the
-                name on your drivers license exactly matches Your
+                document are visible. 
+                {this.state.documentType == 
+                  "DRIVERS LICENSE" && " Please verify the validity of your driving"
+                + " license against the national database."} Your document may not be
+                accepted if it has expired or is invalid. Please check that the
+                name on your document exactly matches Your
                 Bukka-registered name
               </Text>
-              <View
+            </View>
+            <View
                 style={{
-                  height: 70,
-                  //borderTopWidth: 1,
-                  //borderColor: "rgba(0,0,0,.5)",
-                  backgroundColor: colors.b,
+                  height: 100,
                   marginLeft: -20,
                   marginRight: -20,
-                  borderColor: "rgba(0,0,0,.5)",
-                  borderWidth: 1,
-                  padding: 10
+                  padding: 10,
+                  alignItems: "center",
                 }}
               >
                 <TouchableOpacity
                   style={{
+                    width:"80%",
                     backgroundColor: colors.a,
                     flex: 1,
                     alignItems: "center",
                     justifyContent: "center",
-                    flexDirection: "row"
+                    flexDirection: "row",
+                    borderColor: "white",
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    marginBottom: 10,
+
                   }}
                 >
                   <Icon
@@ -142,8 +142,30 @@ export default class Imageandvideopicker extends Component {
                     TAKE A PHOTO
                   </Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    width:"80%",
+                    backgroundColor: colors.a,
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
+                    borderColor: "white",
+                    borderWidth: 1,
+                    borderRadius: 10
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontFamily: "Comfortaa-Bold",
+                      color: colors.b
+                    }}
+                  >
+                    UPLOAD FROM GALLERY
+                  </Text>
+                </TouchableOpacity>
               </View>
-            </View>
           </View>
         </View>
       </Modal>

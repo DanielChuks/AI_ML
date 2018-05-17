@@ -9,9 +9,9 @@ import {
   ScrollView,
   TextInput
 } from "react-native";
+import propTypes from "prop-types";
 import styles, { colors } from "../../styles/style";
 import Inputs from "../others/Inputs";
-import propTypes from "prop-types";
 import Button from "../others/Button";
 import Img from "../others/Images";
 import lib from "../../lib/lib";
@@ -20,41 +20,29 @@ import rsc from "../../lib/resources";
 export default class SignUpOne extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      displayInputLabel: false,
-      email: "",
-      password: "",
-      repeatPassword: "",
-      firstName: "",
-      lastName: "",
-      mobile: "",
-      page: false
-    };
-    this.NavigatePage = this.NavigatePage.bind(this);
   }
-  NavigatePage() {
-    this.setState(prevState => ({ page: !prevState.page }));
-  }
+
   render() {
     return (
-      <ScrollView style={{ paddingLeft: 10, paddingRight: 10 }}>
+      <ScrollView style={{ paddingLeft: 10, paddingRight: 10, marginTop: 100}}>
         <Inputs
-          text="Email address"
+          text="First name"
           isPassword={false}
-          onChangeText={this.props.email}
-          value={this.props.value.email}
+          onChangeText={this.props.firstName}
+          value={this.props.value.firstName}
         />
         <Inputs
-          text="Password"
-          isPassword={true}
-          onChangeText={this.props.password}
-          value={this.props.value.password}
+          text="Last name"
+          isPassword={false}
+          onChangeText={this.props.lastName}
+          value={this.props.value.firstName}
         />
         <Inputs
-          text="Repeat Password"
-          isPassword={true}
-          onChangeText={this.props.repeatPassword}
-          value={this.props.value.repeatPassword}
+          text="080x xxx xxxx "
+          disc="Mobile"
+          isPassword={false}
+          onChangeText={this.props.mobile}
+          value={this.props.value.mobile}
         />
       </ScrollView>
     );

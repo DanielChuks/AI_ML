@@ -117,19 +117,19 @@ class Input extends Component {
             ]}
           />
         )}
-        <TextInput
-          placeholder={this.props.disc ? this.props.disc : this.props.text}
-          style={[
-            styles.input,
-            styles.textColorb,
-            { fontFamily: "Comfortaa-Regular" },
-            styles.input_holder,
-            { paddingLeft: 10, paddingRight: 10, width: "100%" }
-          ]}
-          placeholderTextColor={colors.b}
-          onKeyPress={this.triggerdisplayInputLabel}
-          onChangeText={this.props.onChangeText}
-        />
+          <TextInput
+            placeholder={this.props.disc ? this.props.disc : this.props.text}
+            style={[
+              styles.input,
+              styles.textColorb,
+              { fontFamily: "Comfortaa-Regular" },
+              styles.input_holder,
+              {paddingLeft: 10, paddingRight: 10, width: "100%" }
+            ]}
+            placeholderTextColor={colors.b}
+            onKeyPress={this.triggerdisplayInputLabel}
+            onChangeText={this.props.onChangeText}
+          />
       </View>
     );
   }
