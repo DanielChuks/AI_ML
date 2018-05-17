@@ -28,10 +28,15 @@ export default class Document extends Component {
     };
 
     this.uploadLicense = this.uploadLicense.bind(this);
+    this.uploadVehicleReg = this.uploadVehicleReg.bind(this);
   }
 
   uploadLicense() {
-    
+    this.props.navigation.navigate('imageandvideo', {documentType: 'DRIVERS LICENSE'})
+  }
+
+  uploadVehicleReg() {
+    this.props.navigation.navigate('imageandvideo', {documentType: 'VEHICLE REGISTRATION'})
   }
 
   render() {
@@ -114,14 +119,14 @@ export default class Document extends Component {
                 alignItems: 'center'
               }]
             }
-            onPress={() => {console.log("Touched me")}}
+            onPress={this.uploadVehicleReg}
           >
             <Text style={[{fontSize: 18}]}> Vehicle registration </Text>
             <Icon
               name="chevron-right"
               size={28}
               color={colors.aa}
-              onPress={() => console.log("yh")}
+              onPress={this.uploadVehicleReg}
             />
           </TouchableOpacity>
 

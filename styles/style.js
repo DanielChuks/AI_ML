@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import Dimensions from "Dimensions";
 
 export default StyleSheet.create({
     container:{
@@ -167,18 +168,19 @@ export default StyleSheet.create({
         fontSize:18
     },
     all_width:{
-        width:'100%',
+        width: Dimensions.get("window").width,
     },
     all_height:{
-        height:'100%'
+        width: Dimensions.get("window").height,
     },
     hideDisplay:{
         opacity:0
     },
     input_holder:{
-        width:"100%",
+        width: Dimensions.get("window").width,
         borderBottomColor:'rgba(255,255,255,0.8)',
         borderBottomWidth:1,
+        marginLeft: -10, 
     },
     heighta:{
         height:16
@@ -291,6 +293,18 @@ export default StyleSheet.create({
         paddingLeft:10,
         borderRadius:5,
         color:'rgb(0,0,0)'
+    },
+    fullWidth: {
+        width: Dimensions.get("window").width,
+    },
+    width80: {
+        width: Dimensions.get("window").width * 4 / 5,
+    },
+    centeredView : {
+        justifyContent: "center",
+        height: "auto",
+        flexDirection: "column",
+        alignItems: "center"
     }
 })
 

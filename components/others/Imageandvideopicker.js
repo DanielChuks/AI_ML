@@ -18,7 +18,7 @@ export default class Imageandvideopicker extends Component {
     super(props);
     this.state = {
       modalVisible: true,
-      // documentType: this.props.navigation.state.params.documentType
+      documentType: this.props.navigation.state.params.documentType
     };
   }
   render() {
@@ -63,7 +63,7 @@ export default class Imageandvideopicker extends Component {
                 color: colors.b
               }}
             >
-              DRIVERS LICENSE
+              {this.state.documentType}
             </Text>
             <Icon
               name="keyboard-backspace"
@@ -93,10 +93,12 @@ export default class Imageandvideopicker extends Component {
               >
                 To reduce the chances of your document being rejected: please
                 ensure that allinformation is legible and all corners of the
-                document are visible.Please verify the validity of your driving
-                license against the national database.Your document may not be
-                accepted if it has expired or is invalid.Please check that the
-                name on your drivers license exactly matches Your
+                document are visible. 
+                {this.state.documentType == 
+                  "DRIVERS LICENSE" && " Please verify the validity of your driving"
+                + " license against the national database."} Your document may not be
+                accepted if it has expired or is invalid. Please check that the
+                name on your document exactly matches Your
                 Bukka-registered name
               </Text>
             </View>
