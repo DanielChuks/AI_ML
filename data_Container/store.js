@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import reducers from './reducers/combinedReducer'
 
-const middleware=applyMiddleware(promise(),thunk,logger)
+const middleware=applyMiddleware(promise(),thunk)
 
 const store =createStore(reducers,middleware)
 

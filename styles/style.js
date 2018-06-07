@@ -305,7 +305,19 @@ export default StyleSheet.create({
         height: "auto",
         flexDirection: "column",
         alignItems: "center"
-    }
+    },
+    faq: {
+        position: "absolute",
+        right: 0,
+    },
+    signout: {
+      position: "absolute",
+      height: 60,
+      left: 10,
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      alignItems: "center"
+    },
 })
 
 export const colors={

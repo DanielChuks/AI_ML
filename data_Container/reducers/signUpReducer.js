@@ -1,20 +1,38 @@
-export const initialstatesignup={
-	fetching:false,
-	fetched:false,
-	response:"",
-	error:null
-};
+import { AsyncStorage } from 'react-native';
 
-const signUp=(state=initialstatesignup,action)=>{
+import { initialstate } from './indentifyUserReducer';
+
+const signUp=(state=initialstate,action)=>{
 	switch(action.type){
 		case"SIGN_UP_PENDING":{
-			return{...state,fetching:true,fetched:false,response:"",error:null}
+			return{
+				...state,
+				fetching:true,
+				fetched:false,
+				response:"",
+				error:null
+			}
 		}
 		case"SIGN_UP_REJECTED":{
-			return{...state,fetching:false,fetched:false,response:"",error:action.payload}
+			return{
+				...state,
+				fetching:false,
+				fetched:false,
+				response:"",
+				error:action.payload
+			}
 		}
 		case"SIGN_UP_FULFILLED":{
-			return{...state,fetching:false,fetched:true,response:action.payload.data,error:null}
+      AsyncStorage.setItem('verification', action.payload.data.user.verification)
+			return{
+				...state,
+        fetched: true,
+        fetching: false,
+        token: action.payload.data.token,
+        user: action.payload.data.user,
+        isAuthenticated: true,
+        error: null
+			}
 		}
 		default:
 		return state;
