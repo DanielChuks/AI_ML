@@ -1,4 +1,6 @@
-const initialstate = {
+import { AsyncStorage } from 'react-native';
+import { onSignOut } from '../../util/checkAuth'
+export const initialstate = {
   fetching: false,
   fetched: false,
   user: {},
@@ -63,13 +65,15 @@ const identifyUser = (state = initialstate, action) => {
       };
     }
     case "SIGN_UP_FULFILLED": {
-      return {
-        ...state,
-        fetching: false,
+      return{
+				...state,
         fetched: true,
-        user: action.payload.data,
+        fetching: false,
+        token: action.payload.data.token,
+        user: action.payload.data.user,
+        isAuthenticated: true,
         error: null
-      };
+			};
     }
     case "EDIT_USER_INFO_REJECTED": {
       return {
@@ -78,53 +82,6 @@ const identifyUser = (state = initialstate, action) => {
           error: action.payload.error,
           updating_user_info: false,
           updated_user_info: false
-        }
-      };
-    }
-    case "CLEAR_CARD_ERROR": {
-      return {
-        ...state,
-        reauthentication: {
-          response: "",
-          error: "",
-          fetching: false
-        },
-        time_to_reauthenticate: {
-          is_time_to_reauthenticate: false,
-          response: "",
-          reference: "",
-          error: "",
-          fetching: false
-        }
-      };
-    }
-    case "REAUTHENTICATE_CARD_PENDING": {
-      return {
-        ...state,
-        reauthentication: {
-          response: "",
-          error: "",
-          fetching: true
-        }
-      };
-    }
-    case "REAUTHENTICATE_CARD_FULFILLED": {
-      return {
-        ...state,
-        reauthentication: {
-          response: action.payload.body,
-          error: "",
-          fetching: false
-        }
-      };
-    }
-    case "REAUTHENTICATE_CARD_REJECTED": {
-      return {
-        ...state,
-        reauthentication: {
-          response: "",
-          error: action.payload.response.body,
-          fetching: false
         }
       };
     }
@@ -166,15 +123,6 @@ const identifyUser = (state = initialstate, action) => {
         }
       };
     }
-    case "TRANSACTION_ERROR": {
-      return {
-        ...state,
-        transactionError: {
-          isError: !action.payload.isError,
-          error: action.payload.error
-        }
-      };
-    }
     case "TIME_TO_REAUTHENTICATE_PENDING": {
       return {
         ...state,
@@ -213,14 +161,6 @@ const identifyUser = (state = initialstate, action) => {
         }
       };
     }
-    case "ORDER_STATUS_PENDING": {
-      return {
-        ...state,
-        orderstatus_fetching: true,
-        orderstatus_fetched: false,
-        orderstatus: []
-      };
-    }
     case "FORGOT_PASSWORD_FULFILLED": {
       return {
         ...state,
@@ -232,14 +172,6 @@ const identifyUser = (state = initialstate, action) => {
         }
       };
     }
-    case "ORDER_STATUS_FULFILLED": {
-      return {
-        ...state,
-        orderstatus_fetching: false,
-        orderstatus_fetched: true,
-        orderstatus: action.payload
-      };
-    }
     case "FORGOT_PASSWORD_REJECTED": {
       return {
         ...state,
@@ -249,40 +181,6 @@ const identifyUser = (state = initialstate, action) => {
           fetching: false,
           fetched: false
         }
-      };
-    }
-    case "ORDER_STATUS_REJECTED": {
-      return {
-        ...state,
-        orderstatus_fetching: false,
-        orderstatus_fetched: false,
-        orderstatus: action.payload
-      };
-    }
-    case "ADD_NEW_TRANSACTION": {
-      return {
-        ...state,
-        transaction: action.payload
-      };
-    }
-    case "CLEAR_TRANSACTION": {
-      return {
-        ...state,
-        transaction: action.payload
-      };
-    }
-    case "ADD_CARD_PENDING": {
-      return {
-        ...state,
-        fetching_addcard: true
-      };
-    }
-    case "FETCH_ORDER_HISTORY_PENDING": {
-      return {
-        ...state,
-        fetched_orderhistory: false,
-        fetching_orderhistory: true,
-        orderhistory: []
       };
     }
     case "UPDATING_USER_INFORMATION_PENDING": {
@@ -301,23 +199,6 @@ const identifyUser = (state = initialstate, action) => {
         user_updated: false
       };
     }
-    case "FETCH_ORDER_HISTORY_REJECTED": {
-      return {
-        ...state,
-        fetching_orderhistory: false,
-        fetched_orderhistory: false,
-        orderhistory: [],
-        error: action.payload
-      };
-    }
-    case "ADD_CARD_REJECTED": {
-      return {
-        ...state,
-        fetching_addcard: false,
-        fetched_addcard: false,
-        error: action.payload
-      };
-    }
     case "IDENTIFYING_USER_REJECTED": {
       return {
         ...state,
@@ -328,22 +209,14 @@ const identifyUser = (state = initialstate, action) => {
         error: action.payload
       };
     }
-    case "FETCH_ORDER_HISTORY_FULFILLED": {
-      return {
-        ...state,
-        fetched_orderhistory: true,
-        fetching_orderhistory: false,
-        orderhistory: action.payload,
-        error: null
-      };
-    }
     case "IDENTIFYING_USER_FULFILLED": {
+      AsyncStorage.setItem('verification', action.payload.data.user.verification)
       return {
         ...state,
-        lastCardDigits: "",
         fetched: true,
         fetching: false,
-        user: action.payload.data,
+        token: action.payload.data.token,
+        user: action.payload.data.user,
         isAuthenticated: true,
         error: null
       };
@@ -358,14 +231,17 @@ const identifyUser = (state = initialstate, action) => {
         user_updated: true
       };
     }
-    case "ADD_CARD_FULFILLED": {
+
+    case "UPLOAD_FILES_FULFILLED": {
+      const user = state.user;
       return {
         ...state,
-        fetching_addcard: false,
-        fetched_addcard: true,
-        lastCardDigits: action.payload.data.data.last,
-        error: null
-      };
+        files_upload: action.payload.data,
+        user: {
+          ...user,
+          verification: "inprogress"
+        }
+      }
     }
 
     /*case 'EDIT_USER_INFO_PENDING':{
@@ -385,9 +261,16 @@ const identifyUser = (state = initialstate, action) => {
 					updating_user_update:false,
 					updated_user_update:false,
 					error:action.payload}
-		}*/
+    }*/
+    case "SIGNIN_PAGE": {
+      return {
+        ...state,
+        forgot_password: initialstate.forgot_password
+      };
+    }
 
     case "SIGN_OUT": {
+      onSignOut();
       return { ...initialstate };
     }
     default: {

@@ -14,6 +14,7 @@ import { Permissions } from "expo";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles, { colors } from "../../styles/style";
 import Button from "./Button";
+import lib from '../../lib/lib'
 
 
 export default class Document extends Component {
@@ -23,6 +24,19 @@ export default class Document extends Component {
       image: null
     };
 
+    this.signOut = this.signOut.bind(this);
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('called', nextProps.screenProps.user.isAuthenticated)
+    if (!nextProps.screenProps.user.isAuthenticated) {
+      this.props.navigation.navigate('Auth')
+    }
+  }
+
+  signOut() {
+    lib.signOut();
   }
 
   render() {
@@ -34,9 +48,24 @@ export default class Document extends Component {
           alignContent: "center"
         }
       ]}>
-        <View style={{width: "100%", height: 25}}/>
-        <View style={[styles.centeredView, {backgroundColor: "black", height: 40}]}>
-          <Text style={{color: "white"}}> THANK YOU </Text>
+        <View style={{width: "100%", height: 50}}/>
+        <View style={[styles.centeredView, {backgroundColor: "black", height: 60}]}>
+          <TouchableOpacity 
+            style={[styles.signout]}
+            onPress={this.signOut}
+            activeOpacity={0.5}
+            >
+              <Text style={
+              {
+                color: "#4ca9e8"
+              }}>
+                SIGNOUT
+              </Text>
+          </TouchableOpacity>
+          <Text style={{
+            color: "white",
+            fontSize: 20
+          }}> THANK YOU </Text>
         </View>
         <View style={[styles.centeredView]}>
           <Text style={{marginTop: 20, marginBottom: 20, fontSize: 15, fontWeight: "bold"}}> 
@@ -52,10 +81,10 @@ export default class Document extends Component {
         <View style={[styles.centeredView, {}]}>
           <Image 
             source={require("../../assets/images/youtube.png") }
-            style={[{ width: 240, height: 135, marginTop: 20, marginBottom: 20 }]} 
+            style={[{ width: 288, height: 162, marginTop: 20, marginBottom: 20 }]} 
           />
         </View>
-        <View style={[styles.centeredView]}>
+        <View style={[styles.centeredView, {marginTop: 100}]}>
           <Text style={{textAlign: "center", paddingLeft: 10, paddingRight: 10}}>
            You understand that, in order to use Bukka app, you accept the Bukka Driver Policy.
           </Text>
@@ -63,6 +92,5 @@ export default class Document extends Component {
       </View>
     )
   }
-  
 }
 
