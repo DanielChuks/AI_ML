@@ -21,6 +21,7 @@ import rsc from "../../lib/resources";
 import Dimensions from "Dimensions";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
+import { onSignIn } from "../../util/checkAuth"
 
 class SignUp extends Component {
   constructor(props) {
@@ -66,6 +67,14 @@ class SignUp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const email = this.state.email.toLowerCase();
+    const  password = this.state.password;
+    const verification = nextProps.screenProps.user.user.verification ?
+                            nextProps.screenProps.user.user.verification : false;
+    if(verification) {
+      onSignIn(email, password, verification)
+      this.props.navigation.navigate('AuthLoading')
+    }
     if (nextProps.screenProps.user.error) {
       if (!nextProps.screenProps.user.error.response) {
         alert(
@@ -78,7 +87,7 @@ class SignUp extends Component {
   render() {
     return (
       <View style={[styles.container]}>
-        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
+        <View style={{backgroundColor: "grey", width: "100%", height: 40}}/>
         <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{

@@ -53,7 +53,7 @@ class Home extends Component {
   render() {
     return (
       <View style={[styles.container]}>
-        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
+        <View style={{backgroundColor: "grey", width: "100%", height: 40}}/>
         <Background bugg={bugg} />
         <View style={{ flex: 1 }} />
         <View

@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Home from "./components/index/Home";
+import Navigation from "./components/navigation/Navigation";
+import Index from './components/navigation/Index'
 import store from "./data_Container/store";
 import { Font } from "expo";
-
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,6 +14,7 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
+    console.disableYellowBox = true;
     await Font.loadAsync({
       "Comfortaa-Bold": require("./assets/fonts/Comfortaa-Bold.ttf"),
       "Comfortaa-Light": require("./assets/fonts/Comfortaa-Light.ttf"),
@@ -23,7 +24,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(store);
-    return this.state.fontLoaded ? <Home store={store} /> : null;
+    return this.state.fontLoaded ? <Index store={store} /> : null;
   }
 }

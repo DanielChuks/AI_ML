@@ -49,7 +49,7 @@ class SignUp extends Component {
       alert("Please enter a valid first name");
     } else if (!/\w{2,}/.test(lastName)) {
       alert("Please enter a valid last name");
-    } else if (!/\d{7,}/.test(phoneNumber) || phoneNumber.length > 11) {
+    } else if (!/\d{7,}/.test(phoneNumber) || phoneNumber.length > 15) {
       alert("Please enter a valid phone number");
     } else {
       let newUser = {
@@ -74,7 +74,7 @@ class SignUp extends Component {
   render() {
     return (
       <View style={[styles.container]}>
-        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
+        <View style={{backgroundColor: "grey", width: "100%", height: 40}}/>
         <Background bugg={bugg} opacity={0.7} />
         <View
           style={{
