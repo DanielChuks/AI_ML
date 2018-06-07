@@ -19,6 +19,7 @@ import rsc from "../../lib/resources";
 import Dimensions from "Dimensions";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
+import { onSignIn } from "../../util/checkAuth"
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -32,6 +33,24 @@ export default class SignIn extends Component {
     this.onSend = this.onSend.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.screenProps.user.user){
+      const { email, password } = this.state;
+      const verification = nextProps.screenProps.user.user.verification ?
+                            nextProps.screenProps.user.user.verification : false;
+      if (verification) {
+        onSignIn(email, password, verification)
+        this.props.navigation.navigate('AuthLoading')
+      }
+    }
+
+    if (nextProps.screenProps.user.forgot_password.fetched) {
+      alert('A password reset link has been to your provided email.')
+      lib.refresh('SIGNIN_PAGE')
+      this.props.navigation.push('signin')
+    }
+  }
+
   onLogin() {
     if (this.state.email === "") {
       alert("Email field cannot be empty");
@@ -39,7 +58,6 @@ export default class SignIn extends Component {
       alert("Email field cannot be empty");
     } else {
       const { email, password } = this.state;
-
       lib.signin(email.toLowerCase(), password);
     }
   }
@@ -48,7 +66,7 @@ export default class SignIn extends Component {
     if (this.state.email === "") {
       alert("Email field cannot be empty");
     } else {
-      const { email } = this.state.email;
+      const { email } = this.state;
       lib.forgotPassword(email);
     }
   }
@@ -65,7 +83,7 @@ export default class SignIn extends Component {
           }
         ]}
       >
-        <View style={{backgroundColor: "grey", width: "100%", height: 25}}/>
+        <View style={{backgroundColor: "grey", width: "100%", height: 50}}/>
         <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{
