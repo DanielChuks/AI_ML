@@ -14,11 +14,10 @@ import Icon from "react-native-vector-icons/Entypo";
 import IconM from "react-native-vector-icons//MaterialIcons";
 
 const RatingWidget = ({
-  title,
-  subTitle1,
-  value1,
-  subTitle2,
-  value2
+  averageRating,
+  totalTrips,
+  ratedTrips,
+  fiveStars
 }) => (
   <View style={[styles.wrapper]}>
     <View style={[styles.subWrapper, {height: "40%"}]}>
@@ -34,7 +33,7 @@ const RatingWidget = ({
               size={30}
               color={color.orange}
             />
-            <Text style={{color: "white", fontSize: 30, fontWeight: "bold", marginLeft: 8}}>4.89</Text>
+            <Text style={{color: "white", fontSize: 30, fontWeight: "bold", marginLeft: 8}}>{ averageRating || 0.00 }</Text>
           </View>
           <Text style={{color: color.grey, marginTop: 15}}>YOUR CURRENT RATING</Text>
         </View>
@@ -42,7 +41,7 @@ const RatingWidget = ({
       <View style={[styles.container, styles.centeredContainer, {marginTop: 0, backgroundColor: color.black1}]}>
         <View style={[styles.subContainer1, {alignItems: "center"}]}>
           <Text style={{fontWeight: "bold", fontSize: 20, color: color.white}}>
-            512
+            { totalTrips || 0}
           </Text>
           <Text style={{marginBottom: 7, marginTop: 7, color: color.grey}}>
             LIFETIME TRIPS
@@ -50,7 +49,7 @@ const RatingWidget = ({
         </View>
         <View style={[styles.subContainer1, {marginLeft: 10, alignItems: "center"}]}>
           <Text style={{fontWeight: "bold", fontSize: 20, color: color.white}}>
-            456
+            { ratedTrips || 0}
           </Text>
           <Text style={{marginBottom: 7, marginTop: 7, color: color.grey}}>
            RATED TRIPS
@@ -59,7 +58,7 @@ const RatingWidget = ({
 
         <View style={[styles.subContainer1, {alignItems: "center"}]}>
           <Text style={{fontWeight: "bold", fontSize: 20, color: color.white}}>
-            345
+            { fiveStars || 0 }
           </Text>
           <Text style={{marginBottom: 7, marginTop: 7, color: color.grey}}>
             5-STAR

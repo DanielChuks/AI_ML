@@ -16,21 +16,25 @@ import IconMC from "react-native-vector-icons//MaterialCommunityIcons";
 import { colors } from "react-native-elements";
 
 const Profile = ({
-  title,
-  subTitle1,
-  value1,
-  subTitle2,
-  value2
+  src,
+  displayName,
+  averageRating,
+  totalTrips,
+  driverDuration,
+  durationUnint
 }) => (
   <View style={[styles.wrapper]}>
     <View style={[styles.profile, {height: "40%"}]}>
       <Image
-        source={require("../../assets/images/driver.jpg")}
+        source={{ uri: src }}
         style={{
           width: 120,
           height: 120,
           borderRadius: 60
         }}
+        defaultSource={require("../../assets/images/avatar.jpg")}
+        resizeMode={'contain'}
+        resizeMethod={'resize'}
       />
       <Text
         style={{
@@ -39,7 +43,7 @@ const Profile = ({
           marginBottom: 15
         }}
       >
-        Obinna
+        { displayName }
       </Text>
       <View style={[
         styles.container,
@@ -64,7 +68,7 @@ const Profile = ({
           fontWeight: "bold",
         }}
         >
-          4.78
+          { averageRating }
         </Text>
         <Icon
           name="star"
@@ -85,7 +89,7 @@ const Profile = ({
             }
         ]}>
           <Text style={{fontWeight: "bold", fontSize: 25}}>
-            325
+            { totalTrips || 0 }
           </Text>
           <Text style={{marginBottom: 7, marginTop: 7}}>
             Trips
@@ -94,10 +98,10 @@ const Profile = ({
 
         <View style={[styles.subContainer, {flex: 1/2}]}>
           <Text style={{fontWeight: "bold", fontSize: 25}}>
-            1.5
+            { driverDuration || 0 }
           </Text>
           <Text style={{marginBottom: 7, marginTop: 7}}>
-            Years
+            { durationUnint || 'days'}
           </Text>
         </View>
       </View>
