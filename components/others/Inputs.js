@@ -43,9 +43,11 @@ class Input extends Component {
         {this.state.displayInputLabel ? (
           <Animatable.Text
             style={[
-              styles.textColorb,
               styles.heighta,
-              { fontFamily: "Comfortaa-Regular" }
+              {
+                fontFamily: "Comfortaa-Regular",
+                color: this.props.labelColor ? this.props.labelColor : colors.b,
+              }
             ]}
             animation="fadeInUp"
             iterationCount={1}
@@ -66,11 +68,13 @@ class Input extends Component {
             placeholder={this.props.text}
             style={[
               styles.input,
-              styles.textColorb,
               styles.widtha,
-              { fontFamily: "Comfortaa-Regular" }
+              {
+                fontFamily: "Comfortaa-Regular",
+                color: this.props.labelColor ? this.props.labelColor : colors.b,
+              }
             ]}
-            placeholderTextColor={colors.b}
+            placeholderTextColor={this.props.placeholderTextColor? this.props.placeholderTextColor : colors.b}
             onKeyPress={this.triggerdisplayInputLabel}
             secureTextEntry={this.state.secured}
             onChangeText={this.props.onChangeText}
@@ -102,7 +106,10 @@ class Input extends Component {
       >
         {this.state.displayInputLabel ? (
           <Animatable.Text
-            style={[styles.textColorb, { fontFamily: "Comfortaa-Regular" }]}
+            style={[{
+              fontFamily: "Comfortaa-Regular",
+              color: this.props.labelColor ? this.props.labelColor : colors.b,
+            }]}
             animation="fadeInUp"
             iterationCount={1}
           >
@@ -121,12 +128,14 @@ class Input extends Component {
             placeholder={this.props.disc ? this.props.disc : this.props.text}
             style={[
               styles.input,
-              styles.textColorb,
-              { fontFamily: "Comfortaa-Regular" },
+              {
+                fontFamily: "Comfortaa-Regular",
+                color: this.props.labelColor ? this.props.labelColor : colors.b,
+              },
               styles.input_holder,
               {paddingLeft: 10, paddingRight: 10, width: "100%" }
             ]}
-            placeholderTextColor={colors.b}
+            placeholderTextColor={this.props.placeholderTextColor? this.props.placeholderTextColor : colors.b}
             onKeyPress={this.triggerdisplayInputLabel}
             onChangeText={this.props.onChangeText}
           />

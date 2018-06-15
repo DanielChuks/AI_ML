@@ -61,8 +61,7 @@ class SignUp extends Component {
         password,
         userType: "driver"
       };
-      this.props.navigation.navigate('uploaddocument')
-      // lib.signup(newUser);
+      lib.signup(newUser);
     }
   }
 
