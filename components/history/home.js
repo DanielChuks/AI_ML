@@ -3,11 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet
 } from "react-native";
 import SwitchToggle from 'react-native-switch-toggle';
@@ -18,11 +13,8 @@ import IconMC from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from 'react-native-animatable';
 import Dimensions from "Dimensions";
 import io from 'socket.io-client';
-import styles, { colors } from "../../styles/style";
+import { colors } from "../../styles/style";
 import lib from '../../lib/lib';
-import Inputs from "../others/Inputs";
-import propTypes from "prop-types";
-import Button from "../others/Button";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
 import Widget from "../others/Widget";
@@ -76,6 +68,15 @@ export default class HistoryHome extends Component {
   }
 
   componentDidMount() {
+    // this.socket.on('online', () => {
+    //   console.log("I went online");
+    //   // init geofire
+    //   const geofireInterval = setInterval(() => {
+    //     lib.getLocationAuth();
+    //   },
+    //     1000 * 60
+    //   )
+    // })
     if (this.props.screenProps.user.user.deliveries){
       const { deliveries } = this.props.screenProps.user.user;
       this.setState({

@@ -3,23 +3,20 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
   ScrollView,
-  TextInput
+  KeyboardAvoidingView
 } from "react-native";
 import styles, { colors } from "../../styles/style";
 import Inputs from "../others/Inputs";
-import propTypes from "prop-types";
 import Button from "../others/Button";
 import Img from "../others/Images";
 import lib from "../../lib/lib";
 import rsc from "../../lib/resources";
-import Dimensions from "Dimensions";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
 import { onSignIn } from "../../util/checkAuth"
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -74,7 +71,7 @@ export default class SignIn extends Component {
   render() {
     const { user } = this.props.screenProps;
     return (
-      <View
+      <KeyboardAvoidingView
         style={[
           styles.container,
           {
@@ -82,23 +79,26 @@ export default class SignIn extends Component {
             position: "relative"
           }
         ]}
+        behavior="padding"
+        keyboardVerticalOffset={5}
+        enabled
       >
-        <View style={{backgroundColor: "grey", width: "100%", height: 50}}/>
+        <View style={{backgroundColor: "grey", width: "100%", height: 30 * RATIO_Y}}/>
         <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{
             flex: 4,
             alignItems: "center",
-            paddingLeft: 10,
-            paddingRight: 10,
+            paddingLeft: 10 * RATIO_X,
+            paddingRight: 10 * RATIO_X,
             justifyContent: "space-around"
           }}
         >
           <View>
-            <View style={{ marginTop: 20}}>
+            <View style={{ marginTop: 20 * RATIO_Y}}>
               <Img
                 source={{ uri: rsc.logo }}
-                style={[{ width: 160, height: 60}]}
+                style={[{ width: 160 * RATIO_X, height: 60 * RATIO_Y}]}
               />
               <View style={{ alignItems: "center" }}>
                 <Text
@@ -114,7 +114,7 @@ export default class SignIn extends Component {
             </View>
           </View>
 
-          <ScrollView style={{ width: "100%", marginTop: 150 }}>
+          <ScrollView style={{ width: "100%", marginTop: 20 * RATIO_Y }}>
             {this.state.switchScreen ? (
               <View>
                 <Inputs
@@ -150,7 +150,7 @@ export default class SignIn extends Component {
             >
               <Text
                 style={{
-                  paddingLeft: 5,
+                  paddingLeft: 5 * RATIO_X,
                   color: "rgba(255, 255, 255,1)",
                   textAlign: "right",
                   color: "#F69322",
@@ -180,7 +180,7 @@ export default class SignIn extends Component {
                   shadowOpacity: 0.5,
                   shadowOffset: {
                     width: 0,
-                    height: 1
+                    height: 1 * RATIO_Y
                   }
                 },
                 styles.button__Widec,
@@ -214,31 +214,32 @@ export default class SignIn extends Component {
                   shadowOpacity: 0.5,
                   shadowOffset: {
                     width: 0,
-                    height: 1
+                    height: 1 * RATIO_Y
                   }
                 },
-                styles.button__Widec,
-                styles.button__Long
+                styles.button__Wide__Medium,
+                styles.button_short
               ]}
             />
           )}
         </View>
           <View
-            style={{ flex: 1, height: 789, alignItems: "center"}}
+            style={{ flex: 1, height: 789 * RATIO_Y, alignItems: "center"}}
           >
-            <Text style={{color: "rgba(255, 255, 255,.6)", marginTop: 20 }}>
+            <Text style={{color: "rgba(255, 255, 255,.6)", marginTop: 20 * RATIO_Y }}>
             Don't have an Account?
-              <TouchableOpacity
+              
+            </Text>
+            <TouchableOpacity
               onPress={() => this.props.navigation.navigate("register1")}
-                style={{ width: "auto", height: 15 }}
+                style={{ width: "auto", height: 25 * RATIO_Y }}
               >
-                <Text style={{ paddingLeft: 5, color: "rgba(255, 255, 255,1)", marginBottom: -9 }}>
+                <Text style={{ paddingLeft: 5 * RATIO_X, color: "rgba(255, 255, 255,1)", marginBottom: -9 * RATIO_Y }}>
                 Register
                 </Text>
-              </TouchableOpacity>
-            </Text>
+            </TouchableOpacity>
           </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

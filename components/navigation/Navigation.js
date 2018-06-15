@@ -1,19 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { createStackNavigator, createSwitchNavigator } from "react-navigation";
-import { connect } from "react-redux";
-import { mapStateToProps } from "../../lib/resources";
 import SignIn from "../authentication/SignIn";
 import SignUp1 from "../authentication/SignUp1";
 import SignUp2 from "../authentication/SignUp2";
 import Home from "../index/Home"
-import Collapsible from "../others/Collapsible"
-import { Constants, Location, Permissions } from "expo";
-import lib from "../../lib/lib";
-import Imageandvideopicker from "../others/Imageandvideopicker";
-import Info from "../authentication/Info";
 import Camera from "../others/camera"
-import CameraScreen from "../others/cam"
 import pendingAproval from '../others/pendingAproval'
 import HistoryHome from "../history/home"
 import DocumentUpload from "../others/DocumentUpload";

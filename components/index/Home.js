@@ -2,26 +2,16 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput
 } from "react-native";
 import styles, { colors } from "../../styles/style";
-import Inputs from "../others/Inputs";
-import propTypes from "prop-types";
-import SignUpB from "../authentication/SignUpTwo";
-import SignUpA from "../authentication/SignUpOne";
-import Swiper from "react-native-swiper";
 import Button from "../others/Button";
 import Img from "../others/Images";
-import lib from "../../lib/lib";
 import rsc from "../../lib/resources";
 import Dimensions from "Dimensions";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 class Home extends Component {
   constructor(props) {
@@ -51,9 +41,11 @@ class Home extends Component {
 
 
   render() {
+    const { width, height } = Dimensions.get('window');
+    console.log(width, height, normalize.em(16))
     return (
       <View style={[styles.container]}>
-        <View style={{backgroundColor: "grey", width: "100%", height: 40}}/>
+        <View style={{backgroundColor: "#4C0F0A", width: "100%", height: 30 * RATIO_Y}}/>
         <Background bugg={bugg} />
         <View style={{ flex: 1 }} />
         <View
@@ -65,7 +57,7 @@ class Home extends Component {
         >
           <Img
             source={{ uri: rsc.logo }}
-            style={[{ width: 200, height: 75, marginTop: 250 }]}
+            style={[{ width: 200 * RATIO_X, height: 75 * RATIO_Y, marginTop: 250 * RATIO_Y }]}
             onLoadStart={e => this.setState({ loading: true })}
             onLoad={e => this.setState({ loading: false })}
           />
@@ -89,7 +81,7 @@ class Home extends Component {
                   shadowOpacity: 0.5,
                   shadowOffset: {
                     width: 0,
-                    height: 1
+                    height: 1 * RATIO_Y
                   }
                 },
                 styles.button__Wide__Medium,
@@ -114,7 +106,7 @@ class Home extends Component {
                   shadowOpacity: 0.5,
                   shadowOffset: {
                     width: 0,
-                    height: 1
+                    height: 1 * RATIO_Y
                   }
                 },
                 styles.button__Wide__Medium,
@@ -122,7 +114,6 @@ class Home extends Component {
               ]}
             />
           </View>
-          )}
         </View>
       </View>
     );

@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
-import Dimensions from "Dimensions";
+import normalize from './normalize';
+const { RATIO_X, RATIO_Y, DEVICE_HEIGHT, DEVICE_WIDTH } = normalize;
+
 
 export default StyleSheet.create({
     container:{
@@ -30,11 +32,11 @@ export default StyleSheet.create({
     containerd:{
         flexDirection:'row', 
         justifyContent:'space-between',
-        width:70
+        width:70 * RATIO_X
     },
     containere:{
-        width: 20, 
-        height: 20,
+        width: 20 * RATIO_X, 
+        height: 20 * RATIO_Y,
         alignSelf:'flex-end'
     },
     containerf:{
@@ -59,7 +61,7 @@ export default StyleSheet.create({
         borderBottomColor:'rgba(0,0,0,0.1)',
         borderBottomWidth:1,
         position:'relative',
-        height:120 
+        height:120 * RATIO_Y
     },
     positiona:{
         position:'relative'
@@ -83,15 +85,15 @@ export default StyleSheet.create({
         backgroundColor:'#9C1C26',
         justifyContent:'space-around',
         alignItems:'center',
-        paddingTop:15,
-        paddingBottom:15
+        paddingTop:15 * RATIO_Y,
+        paddingBottom:15 * RATIO_Y
     },
     containerk:{
         backgroundColor:'white',
         height:'70%',
         paddingTop:0,
         padding:10,
-        paddingBottom:25
+        paddingBottom:25 * RATIO_Y
     },
     containerl:{
         flexDirection:'row',
@@ -120,8 +122,8 @@ export default StyleSheet.create({
         borderRadius:50
     },
     dimensiona:{
-        width: 25, 
-        height: 25,
+        width: 25 * RATIO_X, 
+        height: 25 * RATIO_Y,
     },
     flexa:{
         alignItems:'center'
@@ -136,54 +138,54 @@ export default StyleSheet.create({
         color:'#000000'
     },
     button__Long:{
-        height:50,
+        height:50 * RATIO_Y,
     },
     button__Longa:{
-        height:45,
+        height:45 * RATIO_Y,
     },
     button_short:{
-        height:35,
+        height:35 * RATIO_Y,
     },
     button__Widea:{
-        width:179,
+        width:179 * RATIO_X,
     },
     button__Wideb:{
-        width:168
+        width:168 * RATIO_X
     },
     button__Widec:{
-        width:158
+        width:158 * RATIO_X
     },
     button__Wided:{
-        width:80
+        width:80 * RATIO_X
     },
     button__Widee:{
-        width:82
+        width:82 * RATIO_X
     },
     button__Wide__Medium:{
-        width:120
+        width:120 * RATIO_X
     },
     input:{
         
-        height:50,
+        height:50 * RATIO_Y,
         fontSize:18
     },
     all_width:{
-        width: Dimensions.get("window").width,
+        width: DEVICE_WIDTH,
     },
     all_height:{
-        width: Dimensions.get("window").height,
+        width: DEVICE_HEIGHT,
     },
     hideDisplay:{
         opacity:0
     },
     input_holder:{
-        width: Dimensions.get("window").width,
+        width: DEVICE_WIDTH,
         borderBottomColor:'rgba(255,255,255,0.8)',
-        borderBottomWidth:1,
-        marginLeft: -10, 
+        borderBottomWidth:1 * RATIO_X,
+        marginLeft: -10 * RATIO_X, 
     },
     heighta:{
-        height:16
+        height:16 * RATIO_Y
     },
     widtha:{
         width:'90%'
@@ -195,15 +197,15 @@ export default StyleSheet.create({
         alignItems:'center'
     },
     simple_Margin:{
-        marginTop:10,
-        marginBottom:10
+        marginTop:10 * RATIO_Y,
+        marginBottom:10 * RATIO_Y
     },
     textWeight:{
         fontWeight:'bold'
     },
     anima:{ 
-        width:80,
-        height:80,
+        width:80 * RATIO_X,
+        height:80 * RATIO_Y,
         borderRadius:40,
         backgroundColor:"rgba(156,28,38,0.1)",
         justifyContent:"center",
@@ -220,7 +222,7 @@ export default StyleSheet.create({
     textc:{
         fontSize:20,
         color:'#9C1C26',
-        marginTop:8
+        marginTop:8 * RATIO_Y
     },
     textd:{
         padding:5,
@@ -232,8 +234,8 @@ export default StyleSheet.create({
         borderBottomWidth:0
     },
     imagea:{
-        width:80,
-        height:80,
+        width:80 * RATIO_X,
+        height:80 * RATIO_Y,
         borderRadius:40
     },
     flexb:{
@@ -246,8 +248,8 @@ export default StyleSheet.create({
             position:'absolute',
             right:0,
             top:0,
-            width:90,
-            height:119
+            width:90 * RATIO_X,
+            height:119 * RATIO_Y
     },
     button__a:{
         backgroundColor:'#9C1C26',
@@ -263,13 +265,13 @@ export default StyleSheet.create({
         borderBottomWidth:0
     },
     topa:{
-        marginTop:15
+        marginTop:15 * RATIO_Y
     },
     flexd:{
         justifyContent:'space-between'
     },
     topb:{
-        marginBottom:5 
+        marginBottom:5 * RATIO_Y
     },
     texte:{
         fontSize:18,
@@ -284,21 +286,21 @@ export default StyleSheet.create({
     textg:{
         fontSize:18,
         fontWeight:'600',
-        marginBottom:5
+        marginBottom:5 * RATIO_Y
     },
     textInputa:{
-        height: 35, 
+        height: 35 * RATIO_Y, 
         borderColor: 'rgba(0,0,0,.2)', 
         borderWidth: 1,
-        paddingLeft:10,
+        paddingLeft:10 * RATIO_X,
         borderRadius:5,
         color:'rgb(0,0,0)'
     },
     fullWidth: {
-        width: Dimensions.get("window").width,
+        width: DEVICE_WIDTH,
     },
     width80: {
-        width: Dimensions.get("window").width * 4 / 5,
+        width: DEVICE_WIDTH * 4 / 5,
     },
     centeredView : {
         justifyContent: "center",
@@ -312,8 +314,8 @@ export default StyleSheet.create({
     },
     signout: {
       position: "absolute",
-      height: 60,
-      left: 10,
+      height: 60 * RATIO_Y,
+      left: 10 * RATIO_X,
       flexDirection: "row",
       justifyContent: "flex-start",
       alignItems: "center"

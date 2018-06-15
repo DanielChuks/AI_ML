@@ -5,6 +5,8 @@ import styles, { colors } from "../../styles/style";
 import Icon from "react-native-vector-icons/Ionicons";
 import propTypes from "prop-types";
 import Dimensions from "Dimensions";
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 class Input extends Component {
   constructor(props) {
@@ -37,7 +39,7 @@ class Input extends Component {
           styles.all_width,
           styles.simple_Margin,
           { paddingBottom: 0 },
-          wit <= 320 ? { marginTop: 5, marginBottom: 5 } : null
+          wit <= 320 * RATIO_X ? { marginTop: 5 * RATIO_Y, marginBottom: 5 * RATIO_Y } : null
         ]}
       >
         {this.state.displayInputLabel ? (
@@ -101,7 +103,7 @@ class Input extends Component {
         style={[
           styles.all_width,
           styles.simple_Margin,
-          wit <= 320 ? { marginTop: 5, marginBottom: 5 } : null
+          wit <= 320 * RATIO_X ? { marginTop: 5 * RATIO_Y, marginBottom: 5 * RATIO_Y } : null
         ]}
       >
         {this.state.displayInputLabel ? (
@@ -133,7 +135,7 @@ class Input extends Component {
                 color: this.props.labelColor ? this.props.labelColor : colors.b,
               },
               styles.input_holder,
-              {paddingLeft: 10, paddingRight: 10, width: "100%" }
+              {paddingLeft: 10 * RATIO_X, paddingRight: 10 * RATIO_X, width: "100%" }
             ]}
             placeholderTextColor={this.props.placeholderTextColor? this.props.placeholderTextColor : colors.b}
             onKeyPress={this.triggerdisplayInputLabel}

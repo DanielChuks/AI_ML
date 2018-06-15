@@ -3,18 +3,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
   ScrollView,
-  TextInput,
-  Alert
+  WebView
 } from "react-native";
-import { Permissions } from "expo";
-import Icon from "react-native-vector-icons/MaterialIcons";
 import styles, { colors } from "../../styles/style";
-import Button from "./Button";
 import lib from '../../lib/lib'
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 
 export default class Document extends Component {
@@ -48,8 +43,8 @@ export default class Document extends Component {
           alignContent: "center"
         }
       ]}>
-        <View style={{width: "100%", height: 50}}/>
-        <View style={[styles.centeredView, {backgroundColor: "black", height: 60}]}>
+        <View style={{width: "100%", height: 30 * RATIO_Y}}/>
+        <View style={[styles.centeredView, {backgroundColor: "black", height: 60 * RATIO_Y }]}>
           <TouchableOpacity 
             style={[styles.signout]}
             onPress={this.signOut}
@@ -64,31 +59,48 @@ export default class Document extends Component {
           </TouchableOpacity>
           <Text style={{
             color: "white",
-            fontSize: 20
+            fontSize: 20 * RATIO_Y
           }}> THANK YOU </Text>
         </View>
-        <View style={[styles.centeredView]}>
-          <Text style={{marginTop: 20, marginBottom: 20, fontSize: 15, fontWeight: "bold"}}> 
-            YOU'RE ALL SIGN UP! 
-          </Text>
-          <Text style={{textAlign: "center", paddingLeft: 10, paddingRight: 10}}>
-           Congratulations, you've completed the driver sign up process. You'll be notified shortly, once you're approved.
-          </Text>
-          <Text style={{textAlign: "center", marginTop: 10, marginBottom: 10, paddingLeft: 10, paddingRight: 10}}>
-           While your account is being reviewed, feel free to watch the video below to get familiar with being a Bukka Partner.
-          </Text>
-        </View>
-        <View style={[styles.centeredView, {}]}>
-          <Image 
-            source={require("../../assets/images/youtube.png") }
-            style={[{ width: 288, height: 162, marginTop: 20, marginBottom: 20 }]} 
-          />
-        </View>
-        <View style={[styles.centeredView, {marginTop: 100}]}>
-          <Text style={{textAlign: "center", paddingLeft: 10, paddingRight: 10}}>
-           You understand that, in order to use Bukka app, you accept the Bukka Driver Policy.
-          </Text>
-        </View>
+        <ScrollView>
+          <View style={[styles.centeredView]}>
+            <Text style={{marginTop: 20 * RATIO_Y, marginBottom: 20 * RATIO_Y, fontSize: 15 * RATIO_Y, fontWeight: "bold"}}> 
+              YOU'RE ALL SIGN UP! 
+            </Text>
+            <Text style={{
+              textAlign: "center",
+              paddingLeft: 10 * RATIO_X,
+              paddingRight: 10 * RATIO_X
+            }}>
+            Congratulations, you've completed the driver sign up process. You'll be notified shortly, once you're approved.
+            </Text>
+            <Text style={{
+              textAlign: "center",
+              marginTop: 10 * RATIO_Y,
+              marginBottom: 10 * RATIO_Y,
+              paddingLeft: 10 * RATIO_X,
+              paddingRight: 10 * RATIO_X
+            }}>
+            While your account is being reviewed, feel free to watch the video below to get familiar with being a Bukka Partner.
+            </Text>
+          </View>
+          <View style={[styles.centeredView, {}]}>
+            <WebView 
+              source={{uri: 'https://www.youtube.com/embed/RTy12YjfaBw?rel=0&autoplay=0&showinfo=0'}}
+              style={[{
+                width: 288 * RATIO_X,
+                height: 162 * RATIO_Y,
+                marginTop: 20 * RATIO_Y,
+                marginBottom: 20 * RATIO_Y
+              }]}
+            />
+          </View>
+          <View style={[styles.centeredView]}>
+            <Text style={{textAlign: "center", paddingLeft: 10 * RATIO_X, paddingRight: 10 * RATIO_X}}>
+            You understand that, in order to use Bukka app, you accept the Bukka Driver Policy.
+            </Text>
+          </View>
+        </ScrollView>
       </View>
     )
   }

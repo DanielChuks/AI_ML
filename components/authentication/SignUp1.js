@@ -3,24 +3,17 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput
+  KeyboardAvoidingView
 } from "react-native";
 import styles, { colors } from "../../styles/style";
-import Inputs from "../others/Inputs";
-import propTypes from "prop-types";
 import SignUpA from "./SignUpOne";
-import Swiper from "react-native-swiper";
 import Button from "../others/Button";
 import Img from "../others/Images";
-import lib from "../../lib/lib";
 import rsc from "../../lib/resources";
-import Dimensions from "Dimensions";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 class SignUp extends Component {
   constructor(props) {
@@ -73,8 +66,8 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={[styles.container]}>
-        <View style={{backgroundColor: "grey", width: "100%", height: 40}}/>
+      <KeyboardAvoidingView style={[styles.container]} behavior="padding" enabled>
+        <View style={{backgroundColor: "grey", width: "100%", height: 30 * RATIO_Y}}/>
         <Background bugg={bugg} opacity={0.7} />
         <View
           style={{
@@ -83,10 +76,10 @@ class SignUp extends Component {
             alignItems: "center"
           }}
         >
-          <View style={{ marginTop: 20}}>
+          <View style={{ marginTop: 20 * RATIO_Y}}>
             <Img
               source={{ uri: rsc.logo }}
-              style={[{ width: 160, height: 60}]}
+              style={[{ width: 160 * RATIO_X, height: 60 * RATIO_Y}]}
             />
             <View style={{ alignItems: "center" }}>
               <Text
@@ -131,24 +124,28 @@ class SignUp extends Component {
               styles.button__Long
             ]}
           />
-          }
         </View>
         <View
-          style={{ flex: 1, height: 789, alignItems: "center" }}
+          style={{ flex: 1, height: 400 * RATIO_Y, alignItems: "center" }}
         >
-          <Text style={{ color: "rgba(255, 255, 255,.6)", marginTop: 20 }}>
+          <Text style={{ color: "rgba(255, 255, 255,.6)", marginTop: 20 * RATIO_Y}}>
             Already have an Account?
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("signin")}
-              style={{ width: 50, height: 15 }}
-            >
-              <Text style={{ paddingLeft: 5, color: "rgba(255, 255, 255,1)", marginBottom: -5 }}>
-                Sign In
-              </Text>
-            </TouchableOpacity>
           </Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("signin")}
+            style={{ width: "100%", height: 25 * RATIO_Y }}
+          >
+            <Text style={{
+              paddingLeft: 5 * RATIO_X,
+              color: "rgba(255, 255, 255,1)",
+              marginBottom: -5 * RATIO_Y,
+              textAlign: "center"
+            }}>
+              Sign In
+            </Text>
+          </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

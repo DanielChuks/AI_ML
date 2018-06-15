@@ -1,21 +1,10 @@
 import React from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
   ScrollView,
-  TextInput
 } from "react-native";
-import styles, { colors } from "../../styles/style";
 import Inputs from "../others/Inputs";
-import propTypes from "prop-types";
-import Button from "../others/Button";
-import Img from "../others/Images";
-import lib from "../../lib/lib";
-import rsc from "../../lib/resources";
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 export default class SignUpOne extends React.Component {
   constructor(props) {
@@ -24,7 +13,7 @@ export default class SignUpOne extends React.Component {
   
   render() {
     return (
-      <ScrollView style={{ paddingLeft: 10, paddingRight: 10, marginTop: 50 }}>
+      <ScrollView style={{ paddingLeft: 10 * RATIO_X, paddingRight: 10 * RATIO_X, marginTop: 50 * RATIO_Y }}>
         <Inputs
           text="Email address"
           isPassword={false}

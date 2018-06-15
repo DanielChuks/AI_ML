@@ -1,30 +1,22 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
   AsyncStorage,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet,
-  Modal
+  ScrollView
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import IconI from "react-native-vector-icons/Ionicons";
-import IconM from "react-native-vector-icons//MaterialIcons";
-import IconMC from "react-native-vector-icons//MaterialCommunityIcons";
 import { colors } from "react-native-elements";
 import { ImagePicker, Permissions } from "expo";
-import resources  from '../../lib/resources'
-import store from '../../data_Container/store'
 
 import lib from '../../lib/lib';
 import VehicleType from './VehicleType';
-import { baseUrl, apiUrl } from '../../lib/resources'
+import { apiUrl } from '../../lib/resources'
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y } = normalize;
 
 const data = new FormData();
 
@@ -90,7 +82,6 @@ export default class DocumentUpload extends Component {
   _pickImage = async (item) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
-      aspect: [9, 16],
       base64: true
     });
 
@@ -152,14 +143,14 @@ export default class DocumentUpload extends Component {
   }
 
   render() {
-    // console.log('yesss', this.props.user)
     const { selected, showVehicles, vehicleRegistration, license, profilePicture } = this.state;
     const display = showVehicles ? 'flex' : 'none';
     const showVehicleReg = selected === 'car' ? 'flex' : 'none';
-    return (<View style={[
+    return (
+      <View style={[
         styles.container
       ]}>
-        <View style={{backgroundColor: "grey", width: "100%", height: 50}}/>
+        <View style={{backgroundColor: "grey", width: "100%", height: 30 * RATIO_Y}}/>
         <View style={[
           styles.header
         ]}>
@@ -182,12 +173,9 @@ export default class DocumentUpload extends Component {
             DOCUMENTS
           </Text>
         </View>
-        <View style={[
+        <ScrollView style={[
           styles.content
         ]}>
-          <View style={[ styles.tab, {
-            backgroundColor: "#EFEFF4"
-          }]} />
           <TouchableOpacity
             activeOpacity={0.5}
             style={[ styles.tab, styles.tab1]}>
@@ -210,13 +198,13 @@ export default class DocumentUpload extends Component {
             <VehicleType
               text="MotorBike"
               name={selected === 'bike' ? 'radio-button-checked': 'radio-button-unchecked'}
-              marginTop={10}
+              marginTop={10 * RATIO_Y}
               onPress={() => this.selectVehicle('bike')}
             />
             <VehicleType
               text="Bicycle"
               name={selected === 'bicycle' ? 'radio-button-checked': 'radio-button-unchecked'}
-              marginTop={10}
+              marginTop={10 * RATIO_Y}
               onPress={() => this.selectVehicle('bicycle')}
             />
           </View>
@@ -258,7 +246,7 @@ export default class DocumentUpload extends Component {
             <Text style={{
               color: colors.grey2,
               fontSize: 16,
-              marginTop: 20
+              marginTop: 20 * RATIO_Y
             }} >
               To ride for Bukka, your vehicle must be well maintained and must have complete and valid documents.
             </Text>
@@ -308,7 +296,7 @@ export default class DocumentUpload extends Component {
               />
             </View>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
         <TouchableOpacity
           activeOpacity={0.5}
           style={[
@@ -329,10 +317,6 @@ export default class DocumentUpload extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  user: state.user
-})
-
 
 const styles = StyleSheet.create({
   container: {
@@ -343,7 +327,7 @@ const styles = StyleSheet.create({
   },
   header:{
     width: "100%",
-    height: 60,
+    height: 60 * RATIO_Y,
     backgroundColor: "black",
     padding: 20,
     flexDirection: "row",
@@ -366,8 +350,8 @@ const styles = StyleSheet.create({
   },
   signout: {
     position: "absolute",
-    height: 60,
-    left: 10,
+    height: 60 * RATIO_Y,
+    left: 10 * RATIO_X,
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center"
@@ -376,8 +360,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     justifyContent: "space-between",
     padding: 0,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingLeft: 20 * RATIO_X,
+    paddingRight: 20 * RATIO_X
   },
   vehicleType: {
     padding: 20,
@@ -389,11 +373,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   marker: {
-    marginRight: 20
+    marginRight: 20 * RATIO_X
   }
 });
 
 styles.tab = styles.header
-
-
-// export default connect(mapStateToProps)(DocumentUpload)
