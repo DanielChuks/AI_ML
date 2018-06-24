@@ -40,6 +40,15 @@ export const refresh_page = page => {
   return {type: page, payload: {}}
 }
 
+export const banking = (bankDetails, uid) => {
+  setTokenHelper();
+  const result = axios.put(`${baseUrl}/api/v1/drivers/${uid}/details`, bankDetails)
+  return {
+    type: "BANKING",
+    payload: result
+  }
+}
+
 export const upload = (data, uid) => {
   setTokenHelper();
   const result = axios.post(`${baseUrl}/api/v1/drivers/${uid}/details`, data)

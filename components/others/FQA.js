@@ -3,21 +3,16 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
   ScrollView,
-  TextInput,
   StyleSheet,
-  Modal,
-  TouchableWithoutFeedback
 } from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
 import IconM from "react-native-vector-icons//MaterialIcons";
-import IconMC from "react-native-vector-icons//MaterialCommunityIcons";
 import { colors } from "react-native-elements";
 import FAQtab from "./FAQtab"
 import FAQheader from "./FAQheader"
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y, RATIO_F } = normalize;
+
 export default class FAQ extends Component {
   constructor(props) {
     super(props);
@@ -36,12 +31,12 @@ export default class FAQ extends Component {
             <TouchableOpacity>
               <IconM
                 name="close"
-                size={45}
+                size={30 * RATIO_F}
                 color={colors.grey4}
                 onPress={this.props.onPress}
               />
             </TouchableOpacity>
-            <Text style={{color: colors.grey4, fontSize: 30, marginLeft: 20}}> Help </Text>
+            <Text style={{color: colors.grey4, fontSize: 22 * RATIO_F, marginLeft: 20 * RATIO_X}}> Help </Text>
           </View>
         </View>
         <View style={{
@@ -82,26 +77,21 @@ const styles2 = StyleSheet.create({
     backgroundColor: "black",
     justifyContent: "flex-start",
     alignItems: "center",
-    height: 80,
+    height: 80 * RATIO_Y,
     width: "100%",
-    paddingLeft: 20
+    paddingLeft: 20 * RATIO_X
   },
   offset: {
     width: "100%",
-    height: 40,
+    height: 30 * RATIO_Y,
     backgroundColor: "black"
   },
   faqContainer: {
     justifyContent: "flex-end",
-    height: "100%",
   },
   scrollView: {
     backgroundColor: "white",
-    paddingBottom: 20,
+    paddingBottom: 20 * RATIO_Y,
     height: "90%"
   }
 });
-
-const color = {
-  black: "black"
-}

@@ -19,6 +19,15 @@ const signUp=(state=initialstate,action)=>{
 				fetching:false,
 				fetched:false,
 				response:"",
+				error:null
+			}
+		}
+		case "SIGNUP_ERROR":{
+			return{
+				...state,
+				fetching:false,
+				fetched:false,
+				response:"",
 				error:action.payload
 			}
 		}

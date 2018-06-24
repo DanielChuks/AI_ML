@@ -37,6 +37,18 @@ export const initialstate = {
 
 const identifyUser = (state = initialstate, action) => {
   switch (action.type) {
+    case "BANKING_FULFILLED": {
+      return {
+        ...state,
+        bankDetails: action.payload.data,
+      };
+    }
+    case "BANKING_REJECTED": {
+      return {
+        ...state,
+        error: action.payload
+      };
+    }
     case "IDENTIFYING_USER_PENDING": {
       return {
         ...state,
@@ -206,7 +218,7 @@ const identifyUser = (state = initialstate, action) => {
         user: {},
         isAuthenticated: false,
         lastCardDigits: "",
-        error: action.payload
+        error: action.payload,
       };
     }
     case "IDENTIFYING_USER_FULFILLED": {

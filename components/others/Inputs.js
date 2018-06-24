@@ -45,7 +45,6 @@ class Input extends Component {
         {this.state.displayInputLabel ? (
           <Animatable.Text
             style={[
-              styles.heighta,
               {
                 fontFamily: "Comfortaa-Regular",
                 color: this.props.labelColor ? this.props.labelColor : colors.b,
@@ -60,7 +59,6 @@ class Input extends Component {
           <Text
             style={[
               styles.textColorb,
-              styles.heighta,
               { fontFamily: "Comfortaa-Regular" }
             ]}
           />
@@ -135,7 +133,9 @@ class Input extends Component {
                 color: this.props.labelColor ? this.props.labelColor : colors.b,
               },
               styles.input_holder,
-              {paddingLeft: 10 * RATIO_X, paddingRight: 10 * RATIO_X, width: "100%" }
+              {paddingLeft: 10 * RATIO_X, paddingRight: 10 * RATIO_X, width: "100%" },
+              { borderBottomColor: this.props.borderBottomColor },
+              {...this.props.style}
             ]}
             placeholderTextColor={this.props.placeholderTextColor? this.props.placeholderTextColor : colors.b}
             onKeyPress={this.triggerdisplayInputLabel}

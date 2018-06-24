@@ -2,22 +2,20 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Easing,
   StyleSheet,
-  Modal
 } from "react-native";
 import IconM from "react-native-vector-icons//MaterialIcons";
 import { colors } from "react-native-elements";
 
-const VehicleType = ({
+const RadioSelect = ({
   name,
   text,
   onPress,
   backgroundColor,
-  marginTop
+  marginTop,
+  style
 }) => (
-  <View style={[myStyles.container, { backgroundColor, marginTop }]}>
+  <View style={[myStyles.container, { backgroundColor, marginTop }, { ...style }]}>
     <Text style={[myStyles.text]}>{text}</Text>
     <IconM
       name={name}
@@ -39,4 +37,4 @@ const myStyles = StyleSheet.create({
   }
 })
 
-export default VehicleType;
+export default RadioSelect;

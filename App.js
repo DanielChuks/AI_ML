@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "./components/navigation/Navigation";
 import Index from './components/navigation/Index'
 import store from "./data_Container/store";
 import { Font } from "expo";

@@ -24,7 +24,6 @@ export default class Document extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('called', nextProps.screenProps.user.isAuthenticated)
     if (!nextProps.screenProps.user.isAuthenticated) {
       this.props.navigation.navigate('Auth')
     }

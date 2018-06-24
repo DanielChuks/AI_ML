@@ -1,20 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import {
-  View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet,
-  Modal
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import IconM from "react-native-vector-icons//MaterialIcons";
-import IconMC from "react-native-vector-icons//MaterialCommunityIcons";
 import { colors } from "react-native-elements";
+import normalize from '../../styles/normalize';
+const { RATIO_F } = normalize;
 
 const FAQtab = ({
   text
@@ -25,10 +18,10 @@ const FAQtab = ({
     ]}
     activeOpacity = {.9}
     >
-      <Text style={{color: colors.grey, fontSize: 22}}>{text}</Text>
+      <Text style={{flex: 4/5,color: colors.grey, fontSize: 22 * RATIO_F}}>{text}</Text>
       <Icon
         name="chevron-right"
-        size={30}
+        size={30 * RATIO_F}
         color={colors.grey}
         onPress={this.toggleSecure}
       />
@@ -38,7 +31,6 @@ const FAQtab = ({
 
 const styles2 = StyleSheet.create({
   container: {
-    height: 100,
     width: "100%",
     backgroundColor: colors.white,
     justifyContent: "space-between",

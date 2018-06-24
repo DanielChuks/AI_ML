@@ -13,25 +13,34 @@ import lib from "../../lib/lib";
 import rsc from "../../lib/resources";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
-import { onSignIn } from "../../util/checkAuth"
+import { onSignIn } from "../../util/checkAuth";
+import PreLoader from "../others/PreLoader";
 import normalize from '../../styles/normalize';
-const { RATIO_X, RATIO_Y } = normalize;
+const { RATIO_X, RATIO_Y, DEVICE_HEIGHT, DEVICE_WIDTH } = normalize;
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayInputLabel: false,
       email: "",
       password: "",
       repeatPassword: "",
       firstName: "",
       lastName: "",
       mobile: "",
-      page: false,
-      index: 0
+      show: false,
     };
     this.onSignUp = this.onSignUp.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+  }
+
+  showModal() {
+    this.setState({ show: !this.state.show });
+  }
+
+  hideModal() {
+    this.setState({ show: false });
   }
 
   onSignUp() {
@@ -43,7 +52,7 @@ class SignUp extends Component {
     if (email === "") {
       alert("Please enter a valid email address");
     } else if (password === "") {
-      alert("please enter a password");
+      alert("Please enter a password");
     } else if (repeatPassword !== password) {
       alert("Password mismatch");
     } else {
@@ -55,20 +64,28 @@ class SignUp extends Component {
         password,
         userType: "driver"
       };
+      this.showModal()
       lib.signup(newUser);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const email = this.state.email.toLowerCase();
-    const  password = this.state.password;
+    if (nextProps.screenProps.signup.error && !nextProps.screenProps.signup.fetching) {
+        this.hideModal();
+        alert(nextProps.screenProps.signup.error)
+    }
+
     const verification = nextProps.screenProps.user.user.verification ?
-                            nextProps.screenProps.user.user.verification : false;
+        nextProps.screenProps.user.user.verification : false;
     if(verification) {
+      const email = this.state.email.toLowerCase();
+      const  password = this.state.password;
       onSignIn(email, password, verification)
+      //TODO do not redirect to AuthLoading
       this.props.navigation.navigate('AuthLoading')
     }
-    if (nextProps.screenProps.user.error) {
+    if (nextProps.screenProps.user.error && !nextProps.screenProps.user.fetching) {
+      this.hideModal();
       if (!nextProps.screenProps.user.error.response) {
         alert(
           "There appers to be a problem with your network connection,Please try again"
@@ -79,7 +96,14 @@ class SignUp extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={[styles.container]} behavior="padding" enabled>
+      <View style={[styles.container]}>
+        {this.state.show ? 
+          <PreLoader
+            text="Creating Account..."
+          />
+          :
+          null
+        }
         <View style={{backgroundColor: "grey", width: "100%", height: 30 * RATIO_Y}}/>
         <Background bugg={bugg} opacity={0.7}/>
         <View
@@ -106,67 +130,47 @@ class SignUp extends Component {
               </Text>
             </View>
           </View>
-          <SignUpB
-            email={email => this.setState(() => ({ email }))}
-            password={password => this.setState(() => ({ password }))}
-            repeatPassword={repeatPassword =>
-              this.setState(() => ({ repeatPassword }))
-            }
-            value={this.state}
+          <KeyboardAvoidingView
+            behavior="padding"
+            keyboardVerticalOffset={40}
+            enabled
+          >
+            <SignUpB
+              email={email => this.setState(() => ({ email }))}
+              password={password => this.setState(() => ({ password }))}
+              repeatPassword={repeatPassword =>
+                this.setState(() => ({ repeatPassword }))
+              }
+              value={this.state}
+            />
+          </KeyboardAvoidingView>
+          <Button
+            text={"Register"}
+            textColor={[{ color: colors.a }]}
+            event={this.onSignUp}
+            button={[
+              {
+                position: "absolute",
+                bottom: 0,
+                backgroundColor: "#fff",
+                borderRadius: 5,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 0,
+                margin: 0,
+                shadowColor: "#000000",
+                shadowRadius: 5,
+                shadowOpacity: 0.5,
+                shadowOffset: {
+                  width: 0,
+                  height: 1 * RATIO_Y
+                }
+              },
+              styles.button__Widec,
+              styles.button__Long
+            ]}
           />
-          {this.props.screenProps.user.fetching ? (
-            <Button
-              text="Creating Account..."
-              textColor={[{ color: colors.a }]}
-              event={() => console.log("Creating Account")}
-              button={[
-                {
-                  backgroundColor: "#fff",
-                  borderRadius: 5,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 0,
-                  margin: 0,
-                  shadowColor: "#000000",
-                  shadowRadius: 5,
-                  shadowOpacity: 0.5,
-                  shadowOffset: {
-                    width: 0,
-                    height: 1 * RATIO_Y
-                  }
-                },
-                styles.button__Widec,
-                styles.button__Long
-              ]}
-            />
-          ) : (
-            <Button
-              text={"Register"}
-              textColor={[{ color: colors.a }]}
-              event={this.onSignUp}
-              button={[
-                {
-                  backgroundColor: "#fff",
-                  borderRadius: 5,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: 0,
-                  margin: 0,
-                  shadowColor: "#000000",
-                  shadowRadius: 5,
-                  shadowOpacity: 0.5,
-                  shadowOffset: {
-                    width: 0,
-                    height: 1 * RATIO_Y
-                  }
-                },
-                styles.button__Widec,
-                styles.button__Long
-              ]}
-            />
-          )}
         </View>
         <View
           style={{ flex: 1, height: 400 * RATIO_Y, alignItems: "center" }}
@@ -188,7 +192,7 @@ class SignUp extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }

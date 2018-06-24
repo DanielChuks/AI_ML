@@ -42,7 +42,6 @@ class Home extends Component {
 
   render() {
     const { width, height } = Dimensions.get('window');
-    console.log(width, height, normalize.em(16))
     return (
       <View style={[styles.container]}>
         <View style={{backgroundColor: "#4C0F0A", width: "100%", height: 30 * RATIO_Y}}/>

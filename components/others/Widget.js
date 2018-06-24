@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
+import normalize from '../../styles/normalize';
+const { RATIO_Y, RATIO_F } = normalize;
 
 const Widget = ({
   title,
@@ -24,7 +20,7 @@ const Widget = ({
       <Text style={{color: color.grey, fontWeight: "bold"}}> {title} </Text>
       <Icon
         name="chevron-right"
-        size={30}
+        size={30 * RATIO_F}
         color={color.grey}
         onPress={this.toggleSecure}
       />
@@ -37,7 +33,7 @@ const Widget = ({
       <View style={[styles.viewRigth]}>
         <Text
           style={{
-            fontSize: 23,
+            fontSize: 23 * RATIO_F,
             color: "green",
             fontWeight: "bold"
           }}>
@@ -54,9 +50,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    padding: 8,
+    padding: 8 * RATIO_Y,
     opacity: .9,
-    marginTop: 10
+    marginTop: 10 * RATIO_Y
   },
   subContainer: {
     width: "100%",

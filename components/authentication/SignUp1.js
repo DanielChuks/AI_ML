@@ -66,7 +66,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView style={[styles.container]} behavior="padding" enabled>
+      <View style={[styles.container]}>
         <View style={{backgroundColor: "grey", width: "100%", height: 30 * RATIO_Y}}/>
         <Background bugg={bugg} opacity={0.7} />
         <View
@@ -93,18 +93,26 @@ class SignUp extends Component {
               </Text>
             </View>
           </View>
-          <SignUpA
-            firstName={firstName => this.setState(() => ({ firstName }))}
-            lastName={lastName => this.setState(() => ({ lastName }))}
-            mobile={mobile => this.setState(() => ({ mobile }))}
-            value={this.state}
-          />
+          <KeyboardAvoidingView
+            behavior="padding"
+            keyboardVerticalOffset={40}
+            enabled
+          >
+            <SignUpA
+              firstName={firstName => this.setState(() => ({ firstName }))}
+              lastName={lastName => this.setState(() => ({ lastName }))}
+              mobile={mobile => this.setState(() => ({ mobile }))}
+              value={this.state}
+            />
+          </KeyboardAvoidingView>
           <Button
             text={"Next"}
             textColor={[{ color: colors.a }]}
             event={this.next}
             button={[
               {
+                position: "absolute",
+                bottom: 0,
                 backgroundColor: "#fff",
                 borderRadius: 5,
                 display: "flex",
@@ -145,7 +153,7 @@ class SignUp extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }

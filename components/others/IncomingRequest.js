@@ -3,19 +3,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet,
-  Modal
 } from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
 import IconM from "react-native-vector-icons//MaterialIcons";
-import IconMC from "react-native-vector-icons//MaterialCommunityIcons";
 import { colors } from "react-native-elements";
 import * as Animatable from "react-native-animatable";
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y, DEVICE_HEIGHT, DEVICE_WIDTH } = normalize;
 
 export default class IncomingRequest extends Component {
   constructor(props) {
@@ -137,6 +131,15 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
     borderColor: colors.grey4,
     borderWidth: 10
-  }
+  },
+  request_container: {
+    height: DEVICE_HEIGHT,
+    width: DEVICE_HEIGHT,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: 50,
+    position: "absolute",
+    zIndex: 3000,
+  },
 });
 

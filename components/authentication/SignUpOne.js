@@ -27,7 +27,7 @@ export default class SignUpOne extends React.Component {
           value={this.props.value.firstName}
         />
         <Inputs
-          text="080x xxx xxxx "
+          text="+234 080x xxx xxxx"
           disc="Mobile"
           isPassword={false}
           onChangeText={this.props.mobile}

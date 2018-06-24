@@ -14,7 +14,8 @@ import lib from "../../lib/lib";
 import rsc from "../../lib/resources";
 import bugg from "../../assets/images/car.jpg";
 import Background from "../others/Background";
-import { onSignIn } from "../../util/checkAuth"
+import { onSignIn } from "../../util/checkAuth";
+import PreLoader from "../others/PreLoader";
 import normalize from '../../styles/normalize';
 const { RATIO_X, RATIO_Y } = normalize;
 
@@ -24,10 +25,13 @@ export default class SignIn extends Component {
     this.state = {
       email: "",
       password: "",
-      switchScreen: false
+      switchScreen: false,
+      show: false
     };
     this.onLogin = this.onLogin.bind(this);
     this.onSend = this.onSend.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,11 +41,19 @@ export default class SignIn extends Component {
                             nextProps.screenProps.user.user.verification : false;
       if (verification) {
         onSignIn(email, password, verification)
+        this.hideModal();
         this.props.navigation.navigate('AuthLoading')
       }
     }
 
+    if (nextProps.screenProps.user.error && !nextProps.screenProps.user.fetching) {
+      this.hideModal()
+      //TO DO: Handle error well
+      alert('Unable to sign in!')
+    }
+
     if (nextProps.screenProps.user.forgot_password.fetched) {
+      this.hideModal();
       alert('A password reset link has been to your provided email.')
       lib.refresh('SIGNIN_PAGE')
       this.props.navigation.push('signin')
@@ -52,14 +64,24 @@ export default class SignIn extends Component {
     if (this.state.email === "") {
       alert("Email field cannot be empty");
     } else if (this.state.password === "") {
-      alert("Email field cannot be empty");
+      alert("Password field cannot be empty");
     } else {
+      this.showModal();
       const { email, password } = this.state;
       lib.signin(email.toLowerCase(), password);
     }
   }
 
+  showModal() {
+    this.setState({ show: !this.state.show });
+  }
+
+  hideModal() {
+    this.setState({ show: false });
+  }
+
   onSend() {
+    this.showModal();
     if (this.state.email === "") {
       alert("Email field cannot be empty");
     } else {
@@ -71,7 +93,7 @@ export default class SignIn extends Component {
   render() {
     const { user } = this.props.screenProps;
     return (
-      <KeyboardAvoidingView
+      <View
         style={[
           styles.container,
           {
@@ -79,11 +101,15 @@ export default class SignIn extends Component {
             position: "relative"
           }
         ]}
-        behavior="padding"
-        keyboardVerticalOffset={5}
-        enabled
       >
         <View style={{backgroundColor: "grey", width: "100%", height: 30 * RATIO_Y}}/>
+        {this.state.show ? 
+          <PreLoader
+            text="Signing in..."
+          />
+          :
+          null
+        }
         <Background bugg={bugg} opacity={0.7}/>
         <View
           style={{
@@ -116,16 +142,38 @@ export default class SignIn extends Component {
 
           <ScrollView style={{ width: "100%", marginTop: 20 * RATIO_Y }}>
             {this.state.switchScreen ? (
-              <View>
+              <KeyboardAvoidingView
+                style={[
+                  styles.container,
+                  {
+                    backgroundColor: "transparent",
+                    position: "relative"
+                  }
+                ]}
+                behavior="padding"
+                keyboardVerticalOffset={5}
+                enabled
+              >
                 <Inputs
                   text="Email address"
                   isPassword={false}
                   onChangeText={email => this.setState(() => ({ email }))}
                   value={this.state.email}
                 />
-              </View>
+              </KeyboardAvoidingView>
             ) : (
-              <View>
+                <KeyboardAvoidingView
+                  style={[
+                    styles.container,
+                    {
+                      backgroundColor: "transparent",
+                      position: "relative"
+                    }
+                  ]}
+                  behavior="padding"
+                  keyboardVerticalOffset={40}
+                  enabled
+                >
                 <Inputs
                   text="Email address"
                   isPassword={false}
@@ -138,7 +186,7 @@ export default class SignIn extends Component {
                   onChangeText={password => this.setState(() => ({ password }))}
                   value={this.state.password}
                 />
-              </View>
+              </KeyboardAvoidingView>
             )}
 
             <TouchableOpacity
@@ -189,17 +237,9 @@ export default class SignIn extends Component {
             />
           ) : (
             <Button
-              text={
-                user.fetching && !user.isAuthenticated
-                  ? "Please wait.."
-                  : "Sign In"
-              }
+              text="Sign In"
               textColor={[{ color: colors.a, fontFamily: "Comfortaa-Bold" }]}
-              event={
-                user.fetching && !user.isAuthenticated
-                  ? () => alert("signing in")
-                  : this.onLogin
-              }
+              event={this.onLogin}
               button={[
                 {
                   backgroundColor: "#fff",
@@ -223,23 +263,23 @@ export default class SignIn extends Component {
             />
           )}
         </View>
-          <View
-            style={{ flex: 1, height: 789 * RATIO_Y, alignItems: "center"}}
-          >
-            <Text style={{color: "rgba(255, 255, 255,.6)", marginTop: 20 * RATIO_Y }}>
-            Don't have an Account?
-              
-            </Text>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("register1")}
-                style={{ width: "auto", height: 25 * RATIO_Y }}
-              >
-                <Text style={{ paddingLeft: 5 * RATIO_X, color: "rgba(255, 255, 255,1)", marginBottom: -9 * RATIO_Y }}>
-                Register
-                </Text>
-            </TouchableOpacity>
-          </View>
-      </KeyboardAvoidingView>
+        <View
+          style={{ flex: 1, height: 789 * RATIO_Y, alignItems: "center"}}
+        >
+          <Text style={{color: "rgba(255, 255, 255,.6)", marginTop: 20 * RATIO_Y }}>
+          Don't have an Account?
+            
+          </Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("register1")}
+              style={{ width: "auto", height: 25 * RATIO_Y }}
+            >
+              <Text style={{ paddingLeft: 5 * RATIO_X, color: "rgba(255, 255, 255,1)", marginBottom: -9 * RATIO_Y }}>
+              Register
+              </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }

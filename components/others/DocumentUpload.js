@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 import IconI from "react-native-vector-icons/Ionicons";
+import IconE from "react-native-vector-icons/EvilIcons";
 import { colors } from "react-native-elements";
 import { ImagePicker, Permissions } from "expo";
-
 import lib from '../../lib/lib';
-import VehicleType from './VehicleType';
+import VehicleType from './RadioSelect';
 import { apiUrl } from '../../lib/resources'
 import normalize from '../../styles/normalize';
+import PreLoader from "./PreLoader";
 const { RATIO_X, RATIO_Y } = normalize;
 
 const data = new FormData();
@@ -28,7 +29,9 @@ export default class DocumentUpload extends Component {
       showVehicles: false,
       profilePicture: null,
       license: null,
-      vehicleRegistration: null
+      vehicleRegistration: null,
+      uploading: '',
+      show: false
     };
     this._pickImage = this._pickImage.bind(this);
     this._runCamera = this._runCamera.bind(this);
@@ -36,17 +39,27 @@ export default class DocumentUpload extends Component {
     this.selectVehicle = this.selectVehicle.bind(this);
     this.showVehicles = this.showVehicles.bind(this);
     this.continue = this.continue.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     const { status_roll } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     this.setState({ hasCameraPermission: status === "granted", hasCameraRollPermission: status_roll === "granted"});
   }
 
+  showModal() {
+    this.setState({ show: !this.state.show });
+  }
+
+  hideModal() {
+    this.setState({ show: false });
+  }
+
   continue() {
     const { uid } = this.props.screenProps.user.user;
-    const { selected, showVehicles, vehicleRegistration, license, profilePicture } = this.state;
+    const { selected, vehicleRegistration, license, profilePicture } = this.state;
     let details = {};
     
     if (!profilePicture) {
@@ -76,6 +89,7 @@ export default class DocumentUpload extends Component {
         profilePicture,
       }
     }
+    this.showModal();
     lib.upload(details, uid)
   }
 
@@ -87,6 +101,7 @@ export default class DocumentUpload extends Component {
 
 
     if (!result.cancelled) {
+      await this.setState({ uploading: item});
       let base64Img = `data:image/jpg;base64,${result.base64}`
       const { uri, height, width } = result;
   
@@ -105,7 +120,7 @@ export default class DocumentUpload extends Component {
       .then(res=> res.json())
       .then((result) => {
         if(result.secure_url !== '') {
-          this.setState({ [item]: result.secure_url});
+          this.setState({ [item]: result.secure_url, uploading: ''});
         }
       })
       .catch(err=> alert('Could not upload. Please try again later!'))
@@ -129,6 +144,7 @@ export default class DocumentUpload extends Component {
     }
     if (nextProps.screenProps.user.files_upload) {
       AsyncStorage.setItem('verification', 'inprogress')
+      this.hideModal();
       this.props.navigation.navigate('pendingAproval')
     }
   }
@@ -143,7 +159,7 @@ export default class DocumentUpload extends Component {
   }
 
   render() {
-    const { selected, showVehicles, vehicleRegistration, license, profilePicture } = this.state;
+    const { selected, showVehicles, vehicleRegistration, license, profilePicture, uploading, show } = this.state;
     const display = showVehicles ? 'flex' : 'none';
     const showVehicleReg = selected === 'car' ? 'flex' : 'none';
     return (
@@ -215,13 +231,21 @@ export default class DocumentUpload extends Component {
               fontSize: 20
             }} >Profile picture</Text>
             <View style={[styles.contentLeft]}>
-              <IconI
-                style={[styles.marker, { display: profilePicture ? 'flex' : 'none'}]}
-                name="md-checkmark"
-                size={30}
-                color={'green'}
-                onPress={() => this._pickImage('profilePicture')}
-              />
+              { uploading === 'profilePicture' ?
+                <IconE
+                  style={[styles.marker]}
+                  name="spinner"
+                  size={30}
+                  color={'green'}
+                />
+                :
+                <IconI
+                  style={[styles.marker, { display: profilePicture ? 'flex' : 'none'}]}
+                  name="md-checkmark"
+                  size={30}
+                  color={'green'}
+                />
+              }
               <Icon
                 name="upload"
                 size={30}
@@ -259,13 +283,21 @@ export default class DocumentUpload extends Component {
               fontSize: 20
             }} >Drivers License</Text>
             <View style={[styles.contentLeft]}>
-              <IconI
-                style={[styles.marker, { display: license ? 'flex' : 'none'}]}
-                name="md-checkmark"
-                size={30}
-                color={'green'}
-                onPress={() => this._pickImage('profilePicture')}
-              />
+              { uploading === 'license' ?
+                <IconE
+                  style={[styles.marker]}
+                  name="spinner"
+                  size={30}
+                  color={'green'}
+                />
+                :
+                <IconI
+                  style={[styles.marker, { display: license ? 'flex' : 'none'}]}
+                  name="md-checkmark"
+                  size={30}
+                  color={'green'}
+                />
+              }
               <Icon
                 name="upload"
                 size={30}
@@ -281,13 +313,21 @@ export default class DocumentUpload extends Component {
               fontSize: 20
             }} >Vehicle registration</Text>
             <View style={[styles.contentLeft]}>
-              <IconI
-                style={[styles.marker, { display: vehicleRegistration ? 'flex' : 'none'}]}
-                name="md-checkmark"
-                size={30}
-                color={'green'}
-                onPress={() => this._pickImage('profilePicture')}
-              />
+              { uploading === 'vehicleRegistration' ?
+                <IconE
+                  style={[styles.marker]}
+                  name="spinner"
+                  size={30}
+                  color={'green'}
+                />
+                :
+                <IconI
+                  style={[styles.marker, { display: vehicleRegistration ? 'flex' : 'none'}]}
+                  name="md-checkmark"
+                  size={30}
+                  color={'green'}
+                />
+              }
               <Icon
                 name="upload"
                 size={30}
@@ -312,6 +352,14 @@ export default class DocumentUpload extends Component {
             CONTINUE
           </Text>
         </TouchableOpacity>
+
+        { show ? 
+          <PreLoader
+            text="Uploading documents..."
+          />
+          :
+          null
+        }
       </View>
     );
   }

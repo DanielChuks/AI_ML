@@ -16,6 +16,9 @@ const base_unit = 16;
 // We're simulating EM by changing font size according to Ratio
 const unit = base_unit * ratioX;
 
+// TODO: Get font ratio based on device orientation or base font_size
+const font_ratio = ratioY;
+
 // We add an em() shortcut function 
 function em(value) {
   return unit * value;
@@ -32,6 +35,7 @@ export default Style = {
   RATIO_Y: ratioY,
   UNIT: em(1),
   PADDING: em(1.25),
+  RATIO_F: font_ratio,
 
   // CARD
   CARD_WIDTH: x - em(1.25) * 2,

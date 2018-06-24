@@ -55,8 +55,8 @@ export const MainNavigation = createStackNavigator({
       header: false
     }
   },
-  IncomingRequest : {
-    screen: IncomingRequest,
+  BankDetails : {
+    screen: BankDetails,
     navigationOptions: {
       header: false
     }
@@ -77,7 +77,6 @@ export const RootNavigation = createSwitchNavigator({
   AuthLoading: AuthLoadingScreen,
   Auth: AuthNavigation,
   DocumentUpload,
-  BankDetails,
   pendingAproval,
   Main: MainNavigation,
 })

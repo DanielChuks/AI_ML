@@ -1,19 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Animated,
   Image,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import IconM from "react-native-vector-icons//MaterialIcons";
 import IconMC from "react-native-vector-icons//MaterialCommunityIcons";
-import { colors } from "react-native-elements";
+import normalize from '../../styles/normalize';
+const { RATIO_X, RATIO_Y, RATIO_F } = normalize;
+const avatar = require("../../assets/images/avatar.jpg");
 
 const Profile = ({
   src,
@@ -24,59 +20,62 @@ const Profile = ({
   durationUnint
 }) => (
   <View style={[styles.wrapper]}>
-    <View style={[styles.profile, {height: "40%"}]}>
-      <Image
-        source={{ uri: src }}
-        style={{
-          width: 120,
-          height: 120,
-          borderRadius: 60
-        }}
-        defaultSource={require("../../assets/images/avatar.jpg")}
-        resizeMode={'contain'}
-        resizeMethod={'resize'}
-      />
-      <Text
-        style={{
-          color: color.white,
-          marginTop: 10,
-          marginBottom: 15
-        }}
-      >
-        { displayName }
-      </Text>
+    <View>
+      <View style={[styles.profile]}>
+        <Image
+          source={src ? { uri: src } : avatar}
+          style={{
+            width: 120,
+            height: 120,
+            borderRadius: 60,
+            marginTop: 5 * RATIO_Y
+          }}
+          resizeMode={'contain'}
+          resizeMethod={'resize'}
+        />
+        <Text
+          style={{
+            color: color.white,
+            marginTop: 10 * RATIO_Y,
+            marginBottom: 45 * RATIO_Y
+          }}
+        >
+          { displayName || 'DRIVER' }
+        </Text>
+      </View>
+
       <View style={[
         styles.container,
         {
-          bottom: -30,
-          position: 'absolute',
-          height: 60,
-          width: 150,
+          height: 60 * RATIO_Y,
+          width: 150 * RATIO_X,
           padding: 10,
           borderRadius: 30,
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
+          zIndex: 5,
+          marginTop: -30 * RATIO_Y,
+          alignSelf: "center"
         }
       ]}>
         <IconMC
           name="checkbox-multiple-marked-circle"
-          size={25}
+          size={25 * RATIO_F}
           color={color.green}
         />
         <Text style={{
-          fontSize: 30,
+          fontSize: 30 * RATIO_F,
           fontWeight: "bold",
         }}
         >
-          { averageRating }
+          { ` ${averageRating}` }
         </Text>
         <Icon
           name="star"
-          size={15}
+          size={15 * RATIO_F}
           color={color.black}
         />
       </View>
-      
     </View>
     <View>
       <View style={[styles.container]}>
@@ -88,19 +87,19 @@ const Profile = ({
               borderRightColor: color.grey
             }
         ]}>
-          <Text style={{fontWeight: "bold", fontSize: 25}}>
+          <Text style={{fontWeight: "bold", fontSize: 25 * RATIO_F}}>
             { totalTrips || 0 }
           </Text>
-          <Text style={{marginBottom: 7, marginTop: 7}}>
+          <Text style={{marginBottom: 7 * RATIO_Y, marginTop: 7 * RATIO_Y}}>
             Trips
           </Text>
         </View>
 
         <View style={[styles.subContainer, {flex: 1/2}]}>
-          <Text style={{fontWeight: "bold", fontSize: 25}}>
+          <Text style={{fontWeight: "bold", fontSize: 25 * RATIO_F}}>
             { driverDuration || 0 }
           </Text>
-          <Text style={{marginBottom: 7, marginTop: 7}}>
+          <Text style={{marginBottom: 7 * RATIO_Y, marginTop: 7 * RATIO_Y}}>
             { durationUnint || 'days'}
           </Text>
         </View>
@@ -112,7 +111,7 @@ const Profile = ({
 const styles = StyleSheet.create({
   wrapper: {
     justifyContent: "space-between",
-    height: "100%",
+    height: "100%"
   },
   subWrapper: {
     width: "100%",
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     opacity: .9,
-    marginTop: 10
+    marginTop: 10 * RATIO_Y
   },
   profile: {
     flexDirection: "column",

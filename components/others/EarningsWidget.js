@@ -2,34 +2,25 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput,
   StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
-import IconM from "react-native-vector-icons//MaterialIcons";
+import normalize from '../../styles/normalize';
+import Chart from '../history/chart2';
+const { RATIO_X, RATIO_Y, RATIO_F } = normalize;
 
 const EarningsWidget = ({
-  title,
-  subTitle1,
-  value1,
-  subTitle2,
-  value2
+  stats
 }) => (
   <View style={[styles.wrapper]}>
     <View style={[styles.subWrapper, {height: "40%"}]}>
-      <Image
-        source={require("../../assets/images/earnings.png")}
-        resizeMode="stretch"
+      <Chart
         style={{
           flex: 1,
           width: undefined,
           height: undefined
         }}
+        stats={stats}
       />
     </View>
     <View>
@@ -41,11 +32,11 @@ const EarningsWidget = ({
             color={color.grey}
           />
         </View>
-        <View style={[styles.subContainer, {flex: 1, marginLeft: 10, }]}>
-          <Text style={{fontWeight: "bold", fontSize: 20}}>
+        <View style={[styles.subContainer, {flex: 1, marginLeft: 10 * RATIO_X, }]}>
+          <Text style={{fontWeight: "bold", fontSize: 20 * RATIO_F}}>
             Invites
           </Text>
-          <Text style={{marginBottom: 7, marginTop: 7}}>
+          <Text style={{marginBottom: 7 * RATIO_Y, marginTop: 7 * RATIO_Y}}>
             Earn cash for every friend you refer to Bukka driver.
           </Text>
         </View>
@@ -76,7 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 20,
     opacity: .9,
-    marginTop: 10
+    marginTop: 10 * RATIO_Y
   },
   centeredContainer: {
     justifyContent: "space-between"
