@@ -3,7 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from "react-native";
 import SwitchToggle from 'react-native-switch-toggle';
 import Icon from "react-native-vector-icons/Entypo";
@@ -38,7 +39,7 @@ export default class HistoryHome extends Component {
     this.state = {
       toggle: false,
       online: false,
-      page: "earnings",
+      page: "home",
       showFAQ: false,
       menu: false,
       lastTrip: {},
@@ -73,20 +74,23 @@ export default class HistoryHome extends Component {
   componentDidMount() {
     this.socket.on('online', () => {
       this.socket.on('request', (delivery) => {
-        this.setState({ incomingRequest: true, delivery });
+        this.setState({ incomingRequest: true, delivery: delivery }, () => {
+          lib.addToStore('currentDelivery', delivery)
+        });
       })
 
       this.socket.on('driver', (delivery) => {
         console.log('New driver recieved')
       })
       console.log("I went online");
+      lib.getLocation();
       // init geofire
-      this.geofireInterval = setInterval(() => {
-        console.log('Ima')
-        // lib.getLocationAuth();
-      },
-        1000 * 60
-      )
+      // this.geofireInterval = setInterval(() => {
+      //   console.log('Ima')
+      //   lib.getLocation();
+      // },
+      //   1000
+      // )
     })
     if (this.props.screenProps.user.user.deliveries){
       const { deliveries } = this.props.screenProps.user.user;
@@ -103,14 +107,26 @@ export default class HistoryHome extends Component {
   }
 
   goOnline() {
-    console.log(store.getState().user)
     const { token, user } = store.getState().user
+    console.log(token)
     this.socket.emit('online', { token });
   }
 
   goOffline() {
     this.socket.emit('offline', {online: false});
-    clearInterval(this.geofireInterval);
+    // clearInterval(this.geofireInterval);
+  }
+
+  accept() {
+    this.setState({
+      acceptingRequest: true,
+      incomingRequest: false
+    }, 
+    () => {
+      console.log(this.state.delivery)
+      this.socket.emit('accepted', this.state.delivery);
+      this.props.navigation.navigate('EnRoute', { delivery: this.state.delivery });
+    });
   }
 
   showMenu() {
@@ -239,21 +255,14 @@ export default class HistoryHome extends Component {
     )
   }
 
-  accept() {
-    this.setState({
-      acceptingRequest: true,
-      incomingRequest: false
-    }, 
-    () => {this.socket.emit('accepted', this.state.delivery )});
-  }
-
   cancel() {
     console.log(this.state.incomingRequest)
     this.setState({
+      delivery: null,
       acceptingRequest: false,
       incomingRequest: !this.state.incomingRequest
     }, 
-    () => {this.socket.emit('rejected', this.state.delivery)});
+    () => {this.socket.emit('rejected')});
   }
 
   handleViewRef = ref => this.view = ref;
@@ -383,6 +392,15 @@ export default class HistoryHome extends Component {
               }}
             >
               BANKING
+            </Text>
+            <Text
+              style={{color: colors.b, fontFamily: "Comfortaa-Bold",}}
+              onPress={() => {
+                this.showMenu()
+                this.props.navigation.navigate('BankDetails')
+              }}
+            >
+              CASH-OUT
             </Text>
           </View>
         </Animatable.View>
