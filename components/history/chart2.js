@@ -15,7 +15,7 @@ const { RATIO_X, RATIO_Y, DEVICE_HEIGHT, DEVICE_WIDTH, RATIO_F } = normalize;
 
 
 
-export default class PlayerLog extends Component {
+export default class Chart extends Component {
 
   constructor (props) {
     super(props)
@@ -117,6 +117,7 @@ export default class PlayerLog extends Component {
     /* set opacity=0 if no prev or no next, or the size will be changed unexpected */
     const canPrev = currentIndex < this.state.stats.length - 1 ? 1 : 0;
     const canNext = currentIndex > 0 ? 1 : 0
+    const weekText = currentIndex > 1 ? 'Weeks' : 'Week';
     return (
       <View style={styles.container}>
         {this.renderStats(data)}
@@ -125,7 +126,7 @@ export default class PlayerLog extends Component {
           <TouchableHighlight onPress={this.onPressLeft.bind(this)} underlayColor='transparent' style={[styles.button, {opacity: canPrev}]}>
             <Icon name="chevron-left" size={28} color='#6B7C96' style={styles.chevronLeft} />
           </TouchableHighlight>
-          <Text style={styles.date}>30-02-2017</Text>
+          <Text style={styles.date}>{currentIndex === 0 ? 'This Week' : `${currentIndex} ${weekText} ago`}</Text>
           <TouchableHighlight onPress={this.onPressRight.bind(this)} underlayColor='transparent' style={[styles.button, {opacity: canNext}]}>
             <Icon name="chevron-right" size={28} color='#6B7C96' style={styles.chevronRight} />
           </TouchableHighlight>

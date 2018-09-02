@@ -3,6 +3,17 @@
     "name": "bukka",
     "slug": "bukkad",
     "sdkVersion": "27.0.0",
-    "privacy": "unlisted"
+    "privacy": "unlisted",
+    "ios": {
+      "bundleIdentifier": "com.bukkad.bukka"
+    },
+    "android": {
+      "package": "com.bukkad.bukka",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBzzazLBcSF43U2S6pW4tHCiN7rMHzWoik"
+        }
+      }
+    }
   }
 }

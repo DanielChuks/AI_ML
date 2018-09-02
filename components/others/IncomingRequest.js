@@ -16,13 +16,21 @@ export default class IncomingRequest extends Component {
     super(props);
     this.state = {
       time: 4,
+      countDown: 60000 // Use props later for this
     }
   }
 
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({countDown: this.state.countDown - 100})
+    }, 100)
+  }
+
   render() {
+    const progress = (DEVICE_WIDTH - 20) * (this.state.countDown / 60000)
     return (
       <View
-        style={this.props.style}
+        style={this.props.style} // Hide when countDown is 0
       >
         <View style={[styles.reject]}>
           <TouchableOpacity style={[
@@ -76,6 +84,19 @@ export default class IncomingRequest extends Component {
           ]} >
             {this.props.acceptingRequest ? "CONNECTING..." : 'TAP TO ACCEPT'}
           </Text>
+          <View style={{
+            width: DEVICE_WIDTH - 20,
+            backgroundColor: "white",
+            marginTop: 20,
+            borderRadius: 10
+          }}>
+            <View style={{
+              width: progress,
+              height: 15,
+              backgroundColor: "blue",
+              borderRadius: 10
+            }} />
+          </View>
         </View>
       </View>
     );

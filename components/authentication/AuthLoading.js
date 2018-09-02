@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
-  StyleSheet,
   View,
 } from 'react-native';
 
@@ -16,7 +15,8 @@ export default class AuthLoadingScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    AsyncStorage.setItem('IS_MOUNTED', 'false')
+    AsyncStorage.setItem('IS_MOUNTED', 'false');
+    AsyncStorage.removeItem('verification');
   }
 
   componentDidMount() {
@@ -38,17 +38,20 @@ export default class AuthLoadingScreen extends React.Component {
     if (signedIn ===  'pending') {
       this.props.navigation.navigate('DocumentUpload');
     }
-    if (signedIn ===  'inprogress') {
+    else if (signedIn ===  'inprogress') {
       this.props.navigation.navigate('pendingAproval');
     }
-    if (signedIn ===  'approved') {
+    else if (signedIn ===  'approved') {
       this.props.navigation.navigate('Main');
     }
-    if (signedIn ===  false || signedIn ===  'false') {
+    else if (signedIn ===  false || signedIn ===  'false') {
       this.props.navigation.navigate('Auth');
     }
-    if (signedIn ===  'waiting') {
-      this.props.navigation.push('AuthLoading');
+    else if (signedIn ===  'waiting') {
+      this.props.navigation.navigate('AuthLoading');
+    }
+    else {
+      this.props.navigation.navigate('AuthLoading');
     }
   };
 

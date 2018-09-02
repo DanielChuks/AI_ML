@@ -37,6 +37,48 @@ export const initialstate = {
 
 const identifyUser = (state = initialstate, action) => {
   switch (action.type) {
+    case "COMPLETE_DELIVERY_FULFILLED": {
+      return {
+        ...state,
+        deliveryCompleted: true
+      };
+    }
+    case "COMPLETE_DELIVERY_REJECTED": {
+      return {
+        ...state,
+        deliveryCompleted: false
+      };
+    }
+    case "START_DELIVERY_FULFILLED": {
+      return {
+        ...state,
+        deliveryStarted: true
+      };
+    }
+    case "START_DELIVERY_REJECTED": {
+      return {
+        ...state,
+        deliveryStarted: false
+      };
+    }
+    case "CONFIRM_ORDER_FULFILLED": {
+      return {
+        ...state,
+        confirmOrder: true,
+      };
+    }
+    case "CONFIRM_ORDER_REJECTED": {
+      return {
+        ...state,
+        confirmOrder: false,
+      };
+    }
+    case "ADD_TO_STORE": {
+      return {
+        ...state,
+        [action.payload.key]: action.payload.value,
+      };
+    }
     case "BANKING_FULFILLED": {
       return {
         ...state,

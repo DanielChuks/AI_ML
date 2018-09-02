@@ -2,7 +2,6 @@ import axios from "axios";
 import ajx from "../../lib/resources";
 import { baseUrl } from '../../lib/resources'
 import setTokenHelper from '../../util/setToken'
-//import request from 'request'
 
 //signup
 export const signup = data => ({
@@ -33,6 +32,33 @@ export const forgot_password = email => {
     };
   } catch (e) {
     console.log(e, error.response);
+  }
+};
+
+export const confirmOrder = (deliveryId, customerId) => {
+  setTokenHelper();
+  const result = axios.put(`${baseUrl}/api/v1/customers/${customerId}/deliveries/${deliveryId}/confirm`);
+  return {
+    type: "CONFIRM_ORDER",
+    payload: result
+  }
+};
+
+export const startDelivery = (deliveryId, customerId) => {
+  setTokenHelper();
+  const result = axios.put(`${baseUrl}/api/v1/customers/${customerId}/deliveries/${deliveryId}/start`);
+  return {
+    type: "START_DELIVERY",
+    payload: result
+  }
+};
+
+export const completeDelivery = (deliveryId, customerId) => {
+  setTokenHelper();
+  const result = axios.put(`${baseUrl}/api/v1/customers/${customerId}/deliveries/${deliveryId}/complete`);
+  return {
+    type: "COMPLETE_DELIVERY",
+    payload: result
   }
 };
 

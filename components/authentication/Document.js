@@ -3,21 +3,12 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Animated,
-  Image,
-  Easing,
-  ScrollView,
-  TextInput,
-  Alert
 } from "react-native";
 import { Permissions } from "expo";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import styles, { colors } from "../../styles/style";
-import Button from "../others/Button";
 import rsc from "../../lib/resources";
 import Img from "../others/Images";
-import Imagepicker from "../others/Imageandvideopicker";
-import Camera from "../others/camera";
 
 
 export default class Document extends Component {
@@ -40,7 +31,6 @@ export default class Document extends Component {
   }
 
   render() {
-    console.log(this.props.navigation.state.params)
     let { image } = this.state;
     return (
       <View

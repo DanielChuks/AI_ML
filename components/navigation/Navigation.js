@@ -4,14 +4,17 @@ import { createStackNavigator, createSwitchNavigator } from "react-navigation";
 import SignIn from "../authentication/SignIn";
 import SignUp1 from "../authentication/SignUp1";
 import SignUp2 from "../authentication/SignUp2";
-import Home from "../index/Home"
-import Camera from "../others/camera"
-import pendingAproval from '../others/pendingAproval'
-import HistoryHome from "../history/home"
+import Home from "../index/Home";
+import Camera from "../others/camera";
+import pendingAproval from '../others/pendingAproval';
+import HistoryHome from "../history/home";
 import DocumentUpload from "../others/DocumentUpload";
 import BankDetails from "../others/BankDetails"
-import IncomingRequest from "../others/IncomingRequest"
-import AuthLoadingScreen from '../authentication/AuthLoading'
+import EnRoute from "../enroute/EnRoute";
+import AuthLoadingScreen from '../authentication/AuthLoading';
+import RateDelivery from '../others/RateDelivery';
+import RatingWidget from '../others/Rating';
+import IncomingRequest from '../others/IncomingRequest';
 
 
 export const AuthNavigation = createStackNavigator({
@@ -77,7 +80,9 @@ export const RootNavigation = createSwitchNavigator({
   AuthLoading: AuthLoadingScreen,
   Auth: AuthNavigation,
   DocumentUpload,
+  EnRoute,
   pendingAproval,
+  RateDelivery,
   Main: MainNavigation,
 })
 

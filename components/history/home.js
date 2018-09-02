@@ -24,6 +24,7 @@ import { baseUrl } from '../../lib/resources';
 import EarningsWidget from "../others/EarningsWidget";
 import IncomingRequest from "../others/IncomingRequest";
 import Profile from "./Profile";
+import HomeMap from "../enroute//Map";
 import store from '../../data_Container/store';
 import FAQ from "../others/FQA";
 import normalize from '../../styles/normalize';
@@ -221,21 +222,13 @@ export default class HistoryHome extends Component {
           );
       default:
           return (
-            <View>
-              <Widget
-                title = {"LAST TRIP"}
-                subTitle1 = {this.state.lastTrip.time}
-                value1 = {this.state.lastTrip.customerName}
-                subTitle2 = {this.state.lastTrip.earning ? `N${this.state.lastTrip.earning}.00` : "N0.00"}
-                value2 = {"ESTIMATED NET"}
-              />
-              <Widget
-                title = {"TODAY'S TOTAL"}
-                subTitle1 = {this.state.tripsToday.hours}
-                value1 = {this.state.tripsToday.count ? + `${this.state.tripsToday.count} trips` : "No trips"}
-                subTitle2 = {this.state.tripsToday.earnings ? `N${this.state.tripsToday.earnings}.00`: "N0.00"}
-                value2 = {"ESTIMATED NET"}
-              />
+            <View
+              style={{
+                height: "100%",
+                width: "100%"
+              }}
+            >
+              <HomeMap />
             </View>
           );
     }
